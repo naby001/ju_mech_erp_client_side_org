@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import HomePage from "./pages/HomePage";
 import StudentPortfolio from "./pages/student_form";
 import AuthPage from "./pages/AuthPage";
 import "./App.css";
@@ -30,14 +31,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
-<<<<<<< HEAD
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/updateform" element={<StudentPortfolio />} />
-=======
-          <Route path="/" element={!user?<AuthPage />:<StudentPortfolio/>} />
-          <Route path="/updateform" element={user?<StudentPortfolio />:<AuthPage/>} />
->>>>>>> 4166446 (Revert "Merge branch 'main' into main")
+
         </Routes>
       </Router>
     </ThemeProvider>

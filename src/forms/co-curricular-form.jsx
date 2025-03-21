@@ -86,16 +86,6 @@ export default function CoCurricularForm({ onChange, formData, handleChangeCur }
 
   return (
     <Box sx={{ padding: "20px", width: "100%", backgroundColor: "#f5f5f5", borderRadius: "10px" }}>
-<<<<<<< HEAD
-      <Button
-        variant="contained"
-        onClick={() => console.log(exportData())}
-        sx={{ mb: 2 }}
-      >
-        Export Data
-      </Button>
-      {/* Clubs Section */}
-=======
       {Object.keys(formData).map((section) => (
         <FormControlLabel
           key={section}
@@ -119,7 +109,6 @@ export default function CoCurricularForm({ onChange, formData, handleChangeCur }
         ) : null
       )}
       {/* Clubs Section
->>>>>>> dd5b8d3 (home page added)
       <FormControlLabel
         control={<Checkbox checked={clubs.length > 0} onChange={() => setClubs(clubs.length > 0 ? [] : [defaultClubRow])} />}
         label="Association with Clubs/Societies/Chapters"
