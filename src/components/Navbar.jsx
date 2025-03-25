@@ -11,7 +11,7 @@ export default function Navbar({  }) {
       <Toolbar sx={{ minHeight: "50px", display: "flex", justifyContent: "space-between" }}>
         {/* Left: User Full Name */}
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-         Student Portfolio
+         JUMERP
         </Typography>
 
         {/* Right: Sign In, Sign Up, and User Avatar */}

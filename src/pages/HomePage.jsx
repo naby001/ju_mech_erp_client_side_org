@@ -3,6 +3,7 @@ import { Container, Typography, Box, Button, Grid, TextField } from "@mui/materi
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import EventBanner from "../components/EventBanner";
+import Contact from "../components/Contact"
 
 
 //object for facilities provided by JUMERP
@@ -122,36 +123,7 @@ export default function HomePage() {
             </Box>
 
             {/* Contact us part */}
-            <Box sx={{ mt: 6, textAlign: 'center', padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
-                <Typography variant="h4" component="h2" gutterBottom>
-                    Contact Us
-                </Typography>
-                <Box component="form" sx={{ mt: 3, width: '40%', margin: 'auto' }}>
-                    <TextField
-                        fullWidth
-                        label="Name"
-                        variant="outlined"
-                        margin="dense"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Email"
-                        variant="outlined"
-                        margin="dense"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Message"
-                        variant="outlined"
-                        margin="dense"
-                        multiline
-                        rows={4}
-                    />
-                    <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-                        Send Message
-                    </Button>
-                </Box>
-            </Box>
+            <Contact />           
 
 
         </Box>
