@@ -123,7 +123,8 @@ export default function HomePage() {
             </Box>
 
             {/* Contact us part */}
-            <Contact />           
+            <Contact />
+            
 
 
         </Box>
