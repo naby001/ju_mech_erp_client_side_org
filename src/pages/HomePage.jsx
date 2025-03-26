@@ -3,7 +3,6 @@ import { Container, Typography, Box, Button, Grid, TextField } from "@mui/materi
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import EventBanner from "../components/EventBanner";
-import Contact from "../components/Contact"
 
 
 //object for facilities provided by JUMERP
@@ -47,18 +46,16 @@ export default function HomePage() {
         <Box sx={{ height: '100vh', overflowY: 'scroll', overflowX: 'hidden' }}>
             <Navbar />
             <Box sx={{ textAlign: 'center', mt: 10 }}>
-                <Typography variant="h2" component="h1" gutterBottom>
-                    Hello Mechies
+                <Typography sx={{
+                    fontSize:50
+                }} gutterBottom>
+                    Welcome to your JUME Home
                 </Typography>
-                <Typography variant="h3" component="h1" gutterBottom>
-                    Welcome to your <b>STUDENT PROTFOLIO</b>
-                </Typography>
+                
                 <Typography variant="h5" component="h2" gutterBottom>
                     Manage your academic and extracurricular activities in one place.
                 </Typography>
-                <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-                    Sign In To Get Started
-                </Button>
+               
             </Box>
 
             <EventBanner />
@@ -123,8 +120,36 @@ export default function HomePage() {
             </Box>
 
             {/* Contact us part */}
-            <Contact />
-            
+            <Box sx={{ mt: 6, textAlign: 'center', padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
+                <Typography variant="h4" component="h2" gutterBottom>
+                    Contact Us
+                </Typography>
+                <Box component="form" sx={{ mt: 3, width: '40%', margin: 'auto' }}>
+                    <TextField
+                        fullWidth
+                        label="Name"
+                        variant="outlined"
+                        margin="dense"
+                    />
+                    <TextField
+                        fullWidth
+                        label="Email"
+                        variant="outlined"
+                        margin="dense"
+                    />
+                    <TextField
+                        fullWidth
+                        label="Message"
+                        variant="outlined"
+                        margin="dense"
+                        multiline
+                        rows={4}
+                    />
+                    <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+                        Send Message
+                    </Button>
+                </Box>
+            </Box>
 
 
         </Box>
