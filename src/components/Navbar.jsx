@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Box, Button, Avatar, Menu, MenuItem } from "@mui/material";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const user = useSelector((state) => state.user);
@@ -16,6 +16,7 @@ export default function Navbar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+  const navigate=useNavigate();
 
   return (
     <AppBar position="fixed" sx={{ bgcolor: "#b70924" }}>
@@ -46,8 +47,8 @@ export default function Navbar() {
 
         {/* Right: User Full Name and Avatar */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <Typography sx={{ fontWeight: "bold", fontSize: "15px" }}>
-            {user.fullName}
+          <Typography sx={{ fontWeight: "bold", fontSize: "15px", cursor:'pointer'}} onClick={()=>{navigate('/dashboard')}}>
+            Go To My Dashboard
           </Typography>
           <Avatar 
             src={user?.avatar || "/default-avatar.png"} 
