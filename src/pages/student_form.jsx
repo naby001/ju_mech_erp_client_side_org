@@ -250,9 +250,11 @@ export default function MultiStepForm({ onChange }) {
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
         overflowY: isMobile ? "auto" : "hidden",
+        backgroundColor:'white',
+        borderRadius:10
       }}
     >
-      {/* Sidebar (Desktop and Mobile) */}
+      {/* Sidebar (Desktop and Mobile)
       {!isMobile && (
         <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
       )}
@@ -273,7 +275,7 @@ export default function MultiStepForm({ onChange }) {
             <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
           </Drawer>
         </>
-      )}
+      )} */}
       {/* Form Section */}
       <Box
         key={activeSection}
@@ -281,7 +283,7 @@ export default function MultiStepForm({ onChange }) {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          padding: isMobile ? "20px" : "40px",
+          padding: isMobile ? "50px" : "70px",
           width: "100%",
           overflowY: "auto",
         }}
@@ -294,7 +296,7 @@ export default function MultiStepForm({ onChange }) {
         {sections[activeSection].component}
 
         {/* If mobile use button to proeed to next page */}
-        {isMobile && (
+       <Box sx={{display:'flex', alignItems:'center', justifyContent:"center"}}>
           <Button
             variant="contained"
             sx={{
@@ -303,6 +305,7 @@ export default function MultiStepForm({ onChange }) {
               background: "#b70924",
               color: "#fff",
               "&:hover": { background: "#90071d" },
+              width:'20%'
             }}
             onClick={() =>
               setActiveSection((prev) => (prev < sections.length - 1 ? prev + 1 : prev))
@@ -310,7 +313,7 @@ export default function MultiStepForm({ onChange }) {
           >
             Next
           </Button>
-        )}
+          </Box>
       </Box>
     </Box>
   );
