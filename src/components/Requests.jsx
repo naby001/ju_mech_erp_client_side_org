@@ -11,7 +11,7 @@ const Requests = () => {
   const [isOpen, setIsOpen] = useState(false); // Controls form visibility
   const [formData, setFormData] = useState({
     user_id:user._id,
-    fullName: user.personalInfo.name,
+    fullName: user.name,
     requestDetails: "",
     shortWriteup: "",
   });

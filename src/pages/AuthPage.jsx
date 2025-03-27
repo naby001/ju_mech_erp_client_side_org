@@ -13,7 +13,8 @@ import { motion } from "framer-motion";
 import GoogleIcon from "@mui/icons-material/Google";
 import JULogo from "../assets/julogo.png";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../state";
+import { setLogin, setLogout } from "../state";
+import { useNavigate } from "react-router-dom";
 // UI Constants
 const PRIMARY_COLOR = "#b70924";
 const WHITE = "#ffffff";
@@ -30,15 +31,19 @@ const AuthPage = () => {
   };
 
   const dispatch=useDispatch();
+ // dispatch(setLogout());
+  const navigate=useNavigate();
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      const response=await fetch(isLogin?`http://localhost:5000/users/login`:`http://localhist:5000/users/signup`,{
+      const response=await fetch(isLogin?`http://localhost:5000/users/login`:`http://localhost:5000/users/signup`,{
         method:"POST",
-        body:formData
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(formData)
       });
       const returneddata=await response.json();
       dispatch(setLogin({user:returneddata.user,token:returneddata.token}));
+      navigate('/');
     } catch (error) {
       
     }

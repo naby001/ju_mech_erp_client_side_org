@@ -6,7 +6,8 @@ import AuthPage from "./pages/AuthPage";
 import "./App.css";
 import { Dashboard } from "@mui/icons-material";
 import DashboardPage from "./pages/Dashboard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogout } from "./state";
 
 // ✅ Create a Custom Theme
 const theme = createTheme({
@@ -34,15 +35,16 @@ const theme = createTheme({
 
 function App() {
   const user=useSelector((state)=>state.user);
-  
+  const dispatch=useDispatch();
+  //dispatch(setLogout());
   return (
     <ThemeProvider theme={theme}>
     <Router>
       <Routes>
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/" element={user ? <HomePage /> : <Navigate to="/auth" />} />
-        <Route path="/updateform" element={user ? <StudentPortfolio /> : <Navigate to="/auth" />} />
-        <Route path="/dashboard" element={user ? <DashboardPage /> : <Navigate to="/auth" />} />
+        <Route path="/auth" element={!user?<AuthPage />: <HomePage />} />
+        <Route path="/" element={user ? <HomePage /> : <AuthPage/>} />
+        <Route path="/updateform" element={user ? <StudentPortfolio /> : <AuthPage/>} />
+        <Route path="/dashboard" element={user ? <DashboardPage /> : <AuthPage/>} />
       </Routes>
     </Router>
   </ThemeProvider>
