@@ -7,6 +7,7 @@ import MultiStepForm from "./student_form";
 import Navbar from "../components/Navbar";
 import Requests from "../components/Requests";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -18,69 +19,69 @@ export default function DashboardPage() {
   };
 
   const [selectedTab,setselectedTab]=useState('My Details');
-
+  const user=useSelector((state)=>state.user);
+  
   const navigate=useNavigate();
 
   const drawer = (
-    <Box sx={{ bgcolor: "#b70924", height: "100vh", color: "white"}}>
-      <Box sx={{display:'flex', justifyContent:'flex-start', flexDirection:'row', alignItems:'center',  mt:5, mb:2, gap:2}}>
-       {!isMobile&&( <ArrowBackIosNew onClick={() => navigate(-1)}/>)}
-      <Typography variant="h5" sx={{ textAlign: "center", ml:isMobile?3:0}}>
-        My Dashboard
-      </Typography>
+    <Box sx={{ bgcolor: "#b70924", height: "100vh", color: "white", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+      <Box>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', mt: 5, mb: 2, gap: 2 }}>
+          {!isMobile && <ArrowBackIosNew onClick={() => navigate(-1)} />}
+          <Typography variant="h5" sx={{ textAlign: "center", ml: isMobile ? 3 : 0 }}>
+            My Dashboard
+          </Typography>
+        </Box>
+  
+        <List>
+          {[
+            { text: "My Details", icon: <CottageRounded sx={{ color: selectedTab === "My Details" ? "black" : "white", fontSize: selectedTab === "My Details" ? "2rem" : "1.5rem", transition: "font-size 0.3s ease-in-out" }} /> },
+            { text: "My Requests", icon: <ArticleRounded sx={{ color: selectedTab === "My Requests" ? "black" : "white", fontSize: selectedTab === "My Requests" ? "2rem" : "1.5rem", transition: "font-size 0.3s ease-in-out" }} /> },
+            
+          ].map((item, index) => (
+            <ListItem key={index} disablePadding>
+              <ListItemButton
+                sx={{
+                  bgcolor: selectedTab === item.text ? "white" : "transparent",
+                  width: selectedTab === item.text ? "100%" : "auto",
+                  borderTopLeftRadius: selectedTab === item.text ? 16 : 0,
+                  borderBottomLeftRadius: selectedTab === item.text ? 16 : 0,
+                  position: "relative",
+                  overflow: "visible"
+                }}
+                onClick={() => setselectedTab(item.text)}
+              >
+                <ListItemIcon sx={{ color: "white" }}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} sx={{ color: selectedTab === item.text ? "black" : "white" }} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
       </Box>
-      <List>
-  {[
-   { text: "My Details", icon: 
-    <CottageRounded 
-        sx={{
-            color: selectedTab === "My Details" ? "black" : "white",
-            fontSize: selectedTab === "My Details" ? "2rem" : "1.5rem", // Size increase
-            transition: "font-size 0.3s ease-in-out" // Smooth animation
-        }} 
-    /> 
-},
-
-{ text: "My Requests", icon: 
-    <ArticleRounded 
-        sx={{
-            color: selectedTab === "My Requests" ? "black" : "white",
-            fontSize: selectedTab === "My Requests" ? "2rem" : "1.5rem", // Size increase
-            transition: "font-size 0.3s ease-in-out" // Smooth animation
-        }} 
-    /> 
-},
-    { text: "Profile", icon: <AccountCircle /> },
-    { text: "Logout", icon: <ExitToApp /> },
-  ].map((item, index) => (
-    <ListItem key={index} disablePadding>
-      <ListItemButton
-        sx={{
-         // borderRadius: 2,
-          //transition: "all 0.3s ease-in-out",
-          //"&:hover": { bgcolor: "rgba(255, 255, 255, 0.2)" },
-          bgcolor: selectedTab === item.text ? "white" : "transparent",
-          width: selectedTab === item.text ? "100%" : "auto", // Extend the button width when selected
-          borderTopLeftRadius: selectedTab === item.text ? 16 : 0, // Remove top-right radius
-          borderBottomLeftRadius: selectedTab === item.text ? 16 : 0, // Remove bottom-right radius
-          position: "relative", // Needed for pseudo-element
-    overflow: "visible", // Allow the curve to extend beyond the button
-        }}
-        onClick={() => {
-          setselectedTab(item.text);
-        }}
-      >
-      
-        <ListItemIcon sx={{ color: "white" }}>{item.icon}</ListItemIcon>
-        <ListItemText primary={item.text} sx={{color:selectedTab===item.text?"black":"white"}} />
-      </ListItemButton>
-    </ListItem>
-  ))}
-</List>
-
+  
+      {/* Logout Button Positioned at the Bottom */}
+      <ListItem disablePadding sx={{ mb: 2 }}>
+        <ListItemButton
+          sx={{
+            bgcolor: selectedTab === "Logout" ? "white" : "transparent",
+            width: "100%",
+            borderTopLeftRadius: selectedTab === "Logout" ? 16 : 0,
+            borderBottomLeftRadius: selectedTab === "Logout" ? 16 : 0
+          }}
+          onClick={() => {
+            setselectedTab("Logout");
+            // Add logout logic here
+          }}
+        >
+          <ListItemIcon sx={{ color: "white" }}>
+            <ExitToApp />
+          </ListItemIcon>
+          <ListItemText primary="Logout" sx={{ color: selectedTab === "Logout" ? "black" : "white" }} />
+        </ListItemButton>
+      </ListItem>
     </Box>
   );
-
+  
   return (
     <Box sx={{ display: "flex",bgcolor: "#b70924", p:1 }}>
       <CssBaseline />
