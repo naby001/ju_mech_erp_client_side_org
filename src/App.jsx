@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import HomePage from "./pages/HomePage";
 import StudentPortfolio from "./pages/student_form";
 import AuthPage from "./pages/AuthPage";
+import UserProfile from "./pages/UserProfile";
 import "./App.css";
 
 // ✅ Create a Custom Theme
@@ -34,7 +35,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/updateform" element={<StudentPortfolio />} />
-
+          <Route path="/profile" element={<UserProfile />}/>
         </Routes>
       </Router>
     </ThemeProvider>

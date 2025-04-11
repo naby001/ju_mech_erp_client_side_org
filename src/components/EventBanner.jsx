@@ -34,7 +34,7 @@ function EventBanner() {
   };
 
   return (
-    <Box sx={{ mt: 4}}>
+    <Box sx={{ mt: 4 }}>
       <Slider {...settings}>
         {events.map((event, index) => (
           <Box
@@ -61,7 +61,16 @@ function EventBanner() {
             <Typography variant="body1" component="p" gutterBottom>
               {event.description}
             </Typography>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#b70924",
+                color: "#fff",
+                "&:hover": {
+                  backgroundColor: "#9a081e",
+                },
+              }}
+            >
               Learn More
             </Button>
           </Box>

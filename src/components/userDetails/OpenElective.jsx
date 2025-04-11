@@ -1,0 +1,25 @@
+import React from "react";
+import { Box, Typography, Grid, Card, CardContent } from "@mui/material";
+
+export default function OpenElective({ electives }) {
+  return (
+    <Box sx={{mb:2}}>
+      <Typography variant="h6" component="h2" gutterBottom>
+        Open Electives
+      </Typography>
+      <Grid container spacing={2}>
+        {electives.map((elective, index) => (
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <Card>
+              <CardContent>
+                <Typography variant="body1" component="p">
+                  {elective}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+}
