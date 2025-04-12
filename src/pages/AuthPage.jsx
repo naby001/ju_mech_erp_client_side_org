@@ -11,7 +11,10 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 import GoogleIcon from "@mui/icons-material/Google";
-
+import JULogo from "../assets/julogo.png";
+import { useDispatch } from "react-redux";
+import { setLogin, setLogout } from "../state";
+import { useNavigate } from "react-router-dom";
 // UI Constants
 const PRIMARY_COLOR = "#b70924";
 const WHITE = "#ffffff";
@@ -27,9 +30,23 @@ const AuthPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const dispatch=useDispatch();
+ // dispatch(setLogout());
+  const navigate=useNavigate();
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(isLogin ? "Logging in..." : "Signing up...", formData);
+    try {
+      const response=await fetch(isLogin?`http://localhost:5000/users/login`:`http://localhost:5000/users/signup`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(formData)
+      });
+      const returneddata=await response.json();
+      dispatch(setLogin({user:returneddata.user,token:returneddata.token}));
+      navigate('/');
+    } catch (error) {
+      
+    }
   };
 
   const handleGoogleSignIn = () => {
@@ -39,27 +56,36 @@ const AuthPage = () => {
 
   return (
     <Container
-      maxWidth="xs"
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+    sx={{
+      minHeight: "100vh",
+      width: "100vw",  // Ensure it spans the full width
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 2, // Optional: removes default padding
+      backgroundColor:"#b70924"
+    }}
+    maxWidth={false}
     >
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
+        style={{
+          height:isMobile?'80%':'20%',
+        }}
       >
-        <Paper
-          elevation={10}
-          sx={{
-            padding: isMobile ? 3 : 5,
-            borderRadius: 4,
-            textAlign: "center",
-            bgcolor: WHITE,
-          }}
-        >
+         <Paper
+      elevation={10}
+      sx={{
+        padding: isMobile ? 3 : 5,
+        borderRadius: 4,
+        textAlign: "center",
+        bgcolor: "white",
+        height: isMobile ? "60vh" : "auto", // 80% of the screen height on mobile
+        width: isMobile ? "90vw" : "auto", // Optional: Make it more responsive
+      }}
+    >
+      <img src={JULogo} style={{width:!isMobile?300:200, height:!isMobile?60:40}}/>
           <Typography
             variant={isMobile ? "h5" : "h4"}
             fontWeight="bold"
