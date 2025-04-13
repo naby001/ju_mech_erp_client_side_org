@@ -15,6 +15,8 @@ import Club from "../components/userDetails/Club";
 import TechFests from "../components/userDetails/TechFests";
 import Leadership from "../components/userDetails/Leadership";
 import Skills from "../components/userDetails/Skills";
+import SocialActivities from "../components/userDetails/SocialActivities";
+import Seminar from "../components/userDetails/Seminar";
 
 //? Static details of the component page
 export default function UserProfile() {
@@ -140,6 +142,53 @@ export default function UserProfile() {
     },
   ];
 
+  const socialActivities = [
+    {
+      name: "Tree Plantation Drive",
+      venue: "City Park",
+      date: "2023-06-15",
+      organizer: "Green Earth Initiative",
+      role: "Volunteer",
+    },
+    {
+      name: "Blood Donation Camp",
+      venue: "Community Hall",
+      date: "2023-08-20",
+      organizer: "Red Cross Society",
+      role: "Coordinator",
+    },
+    {
+      name: "Beach Cleanup",
+      venue: "Sunny Beach",
+      date: "2023-09-10",
+      organizer: "Clean Shores Organization",
+      role: "Participant",
+    },
+  ];
+  const seminars = [
+    {
+      name: "AI and Machine Learning",
+      venue: "Tech Auditorium",
+      date: "2023-05-10",
+      role: "Speaker",
+      organizer: "Tech University",
+    },
+    {
+      name: "Sustainable Energy",
+      venue: "Green Hall",
+      date: "2023-06-15",
+      role: "Participant",
+      organizer: "EcoTech",
+    },
+    {
+      name: "Robotics Workshop",
+      venue: "Innovation Center",
+      date: "2023-07-20",
+      role: "Coordinator",
+      organizer: "Robotics Club",
+    },
+  ];
+
   return (
     <Box
       sx={{
@@ -200,6 +249,10 @@ export default function UserProfile() {
           <Leadership roles={leadershipRoles} />
           {/* Skills pursued by the user */}
           <Skills skills={skills} />
+          {/* Social Actvities of the user */}
+          <SocialActivities activities={socialActivities} />;
+          {/* Seminars attended by the user */}
+          <Seminar seminars={seminars} />
         </Box>
       </Box>
     </Box>
