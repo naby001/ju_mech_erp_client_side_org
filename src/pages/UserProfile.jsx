@@ -87,7 +87,9 @@ export default function UserProfile() {
             overflowY: "auto", // Allow scrolling if content overflows
           }}
         >
+          {/* Primary user details of the user */}
           <UserDetailsLeft user={user} />
+          {/* Edit profile option for the user */}
         </Box>
 
         {/* Right Column: Scrollable Main Content */}
