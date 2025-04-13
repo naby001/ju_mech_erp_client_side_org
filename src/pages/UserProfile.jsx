@@ -12,6 +12,7 @@ import ProfessionalElective from "../components/userDetails/ProfessionalElective
 import OpenElective from "../components/userDetails/OpenElective";
 import Projects from "../components/userDetails/Projects";
 import Club from "../components/userDetails/Club";
+import TechFests from "../components/userDetails/TechFests";
 
 //? Static details of the component page
 export default function UserProfile() {
@@ -68,6 +69,36 @@ export default function UserProfile() {
     },
   ];
 
+  const techFests = [
+    {
+      name: "RoboFest 2023",
+      organiser: "Tech University",
+      eventType: "Robotics Competition",
+      year: 2023,
+      role: "Team Lead",
+      teammates: ["Alice", "Bob", "Charlie"],
+      outcome: "Winner",
+    },
+    {
+      name: "CodeSprint 2022",
+      organiser: "Code Academy",
+      eventType: "Hackathon",
+      year: 2022,
+      role: "Participant",
+      teammates: ["David", "Eve"],
+      outcome: "Runner-up",
+    },
+    {
+      name: "GreenTech Workshop",
+      organiser: "EcoTech",
+      eventType: "Workshop",
+      year: 2021,
+      role: "Attendee",
+      teammates: [],
+      outcome: "Certificate of Participation",
+    },
+  ];
+
   return (
     <Box
       sx={{
@@ -109,7 +140,7 @@ export default function UserProfile() {
           }}
         >
           {/* Main Content */}
-          <Typography variant="h4" component="h1" sx={{fontWeight: "bold"}} gutterBottom>
+          <Typography variant="h3" component="h3" sx={{fontWeight: "bold"}} gutterBottom>
             Welcome, {user.fullName}
           </Typography>
           {/* Grade details of the user */}
@@ -122,6 +153,9 @@ export default function UserProfile() {
           <Projects />
           {/* Clubs joined by the candidate */}
           <Club clubs={clubs} />
+          {/* Tech fests participated by the candidate */}
+          <TechFests techFests={techFests} />
+          {/* Leaderchip Roles */}
         </Box>
       </Box>
     </Box>

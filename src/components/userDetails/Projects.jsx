@@ -39,7 +39,7 @@ function Projects() {
 
   return (
     <Box sx={{mb:2}}>
-      <Typography variant="h6" component="h2" gutterBottom>
+      <Typography variant="h4" component="h4" gutterBottom>
         Projects
       </Typography>
       <TableContainer component={Paper}>

@@ -11,8 +11,8 @@ import {
 
 function Club({ clubs }) {
   return (
-    <Box>
-      <Typography variant="h6" component="h2" gutterBottom>
+    <Box sx={{mb:2}}>
+      <Typography variant="h4" component="h4" gutterBottom>
         Clubs
       </Typography>
       <Grid container spacing={2}>
@@ -70,7 +70,7 @@ function Club({ clubs }) {
                 <Typography variant="body1" color="text.primary">
                   Accolades:
                 </Typography>
-
+                {/* Listing the array of accholoades */}
                 {club.accolades.map((accolade, idx) => (
                   <Typography variant="body2" color="text.primary">
                     {accolade}
@@ -80,7 +80,7 @@ function Club({ clubs }) {
                 <Typography variant="body1" color="text.primary">
                   Achievements:
                 </Typography>
-
+                {/* Listing the array of achievements  */}
                 {club.achievements.map((achievement, idx) => (
                   <Typography variant="body2" color="text.primary">
                     {achievement}

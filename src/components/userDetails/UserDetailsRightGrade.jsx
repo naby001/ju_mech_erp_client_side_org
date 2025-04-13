@@ -14,7 +14,7 @@ import {
 function UserDetailsRightGrade({sgpaData}) {
   return (
     <Box sx={{mb:2}}>
-      <Typography variant="h6" component="h2" gutterBottom>
+      <Typography variant="h4" component="h4" gutterBottom>
         Semester-wise SGPA
       </Typography>
       <TableContainer component={Paper} sx={{ mt: 2 }}>

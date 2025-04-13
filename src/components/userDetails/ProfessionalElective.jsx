@@ -4,7 +4,7 @@ import { Box, Typography, Grid, Card, CardContent } from "@mui/material";
 export default function ProfessionalElective({ electives }) {
   return (
     <Box sx={{ mb: 2 }}>
-      <Typography variant="h6" component="h2" gutterBottom>
+      <Typography variant="h4" component="h4" gutterBottom>
         Professional Electives
       </Typography>
       <Grid container spacing={2}>
