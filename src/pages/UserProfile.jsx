@@ -48,22 +48,22 @@ export default function UserProfile() {
     {
       name: "Mechatronics Club",
       role: "Technical Team Lead",
-      accolades: "Best Project Award 2023",
-      achievements: "Developed a robotic arm",
+      accolades: ["Best Project Award 2023"],
+      achievements: ["Developed a robotic arm"],
       image: "/path/to/robotics-club.jpg",
     },
     {
       name: "ISHRAE",
       role: "Technical Member",
-      accolades: "Best Design Award 2023",
-      achievements: "Participated in HVAC design competition",
+      accolades: ["Best Design Award 2023","Best Paper Award 2023"],
+      achievements: ["Participated in HVAC design competition"],
       image: "/path/to/coding-club.jpg",
     },
     {
       name: "Motosports Club",
       role: "Powertrain Team Member",
-      accolades: "Best Performance Award 2023",
-      achievements: "Designed a fuel-efficient engine",
+      accolades: ["Best Performance Award 2023"],
+      achievements: ["Designed a fuel-efficient engine"],
       image: "/path/to/drama-club.jpg",
     },
   ];

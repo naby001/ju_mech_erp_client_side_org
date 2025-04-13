@@ -24,6 +24,9 @@ function Club({ clubs }) {
                 padding: "0px",
                 overflow: "visible",
                 cursor: "pointer",
+                height: "100%", // Make the card fill the grid cell
+                display: "flex",
+                flexDirection: "column", // Ensure content stacks vertically
               }}
             >
               {/* Wrapper for Avatar with Background */}
@@ -52,7 +55,7 @@ function Club({ clubs }) {
                   }}
                 />
               </Box>
-              <CardContent>
+              <CardContent sx={{ flexGrow: 1 }}>
                 <Typography
                   variant="h6"
                   component="h3"
@@ -65,22 +68,37 @@ function Club({ clubs }) {
                   {club.role}
                 </Typography>
                 <Typography variant="body1" color="text.primary">
-                  Accolades: {club.accolades}
+                  Accolades:
                 </Typography>
+
+                {club.accolades.map((accolade, idx) => (
+                  <Typography variant="body2" color="text.primary">
+                    {accolade}
+                  </Typography>
+                ))}
+
                 <Typography variant="body1" color="text.primary">
-                  Achievements: {club.achievements}
+                  Achievements:
                 </Typography>
-                {/* Show Certificate Button */}
+
+                {club.achievements.map((achievement, idx) => (
+                  <Typography variant="body2" color="text.primary">
+                    {achievement}
+                  </Typography>
+                ))}
+
+              </CardContent>
+              <Box sx={{ padding: "16px" }}>
                 <Button
                   variant="outlined"
-                  color="#b70924"
+                  color="primary"
                   size="small"
-                  sx={{ mt: 2, color: "#b70924" }}
+                  sx={{ color: "#b70924", borderColor: "#b70924" }}
                   onClick={() => alert(`Viewing certificate for ${club.name}`)}
                 >
                   View Certificate
                 </Button>
-              </CardContent>
+              </Box>
             </Card>
           </Grid>
         ))}
