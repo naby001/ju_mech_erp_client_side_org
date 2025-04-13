@@ -13,6 +13,8 @@ import OpenElective from "../components/userDetails/OpenElective";
 import Projects from "../components/userDetails/Projects";
 import Club from "../components/userDetails/Club";
 import TechFests from "../components/userDetails/TechFests";
+import Leadership from "../components/userDetails/Leadership";
+import Skills from "../components/userDetails/Skills";
 
 //? Static details of the component page
 export default function UserProfile() {
@@ -99,6 +101,45 @@ export default function UserProfile() {
     },
   ];
 
+  const leadershipRoles = [
+    {
+      role: "Team Lead",
+      details: "Led a team of 5 members in a robotics competition.",
+    },
+    {
+      role: "Event Coordinator",
+      details: "Organized the annual tech fest with 200+ participants.",
+    },
+    {
+      role: "Club President",
+      details: "Managed the activities of the coding club for 2 years.",
+    },
+  ];
+
+  const skills = [
+    {
+      name: "Machine Learning",
+      offeredBy: "Coursera",
+      mode: "Online",
+      duration: "3 months",
+      fee: "50",
+    },
+    {
+      name: "Data Structures and Algorithms",
+      offeredBy: "Udemy",
+      mode: "Online",
+      duration: "2 months",
+      fee: "30",
+    },
+    {
+      name: "Thermodynamics",
+      offeredBy: "MIT OpenCourseWare",
+      mode: "Online",
+      duration: "4 months",
+      fee: "Free",
+    },
+  ];
+
   return (
     <Box
       sx={{
@@ -156,6 +197,9 @@ export default function UserProfile() {
           {/* Tech fests participated by the candidate */}
           <TechFests techFests={techFests} />
           {/* Leaderchip Roles */}
+          <Leadership roles={leadershipRoles} />
+          {/* Skills pursued by the user */}
+          <Skills skills={skills} />
         </Box>
       </Box>
     </Box>

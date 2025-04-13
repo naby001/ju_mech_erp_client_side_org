@@ -12,42 +12,38 @@ import {
   Button,
 } from "@mui/material";
 
-function TechFests({ techFests }) {
+function Skills({ skills }) {
   return (
     <Box sx={{ mb: 2 }}>
       <Typography variant="h4" component="h4" gutterBottom>
-        Tech Fests
+        Skills
       </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell><b>Name</b></TableCell>
-              <TableCell><b>Organiser</b></TableCell>
-              <TableCell><b>Event Type</b></TableCell>
-              <TableCell><b>Year</b></TableCell>
-              <TableCell><b>Role</b></TableCell>
-              <TableCell><b>Teammates</b></TableCell>
-              <TableCell><b>Outcome</b></TableCell>
+              <TableCell><b>Offered By</b></TableCell>
+              <TableCell><b>Mode</b></TableCell>
+              <TableCell><b>Duration</b></TableCell>
+              <TableCell><b>Fee(in INR)</b></TableCell>
               <TableCell><b>Certificate</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {techFests.map((fest, index) => (
+            {skills.map((skill, index) => (
               <TableRow key={index}>
-                <TableCell>{fest.name}</TableCell>
-                <TableCell>{fest.organiser}</TableCell>
-                <TableCell>{fest.eventType}</TableCell>
-                <TableCell>{fest.year}</TableCell>
-                <TableCell>{fest.role}</TableCell>
-                <TableCell>{fest.teammates.join(", ")}</TableCell>
-                <TableCell>{fest.outcome}</TableCell>
+                <TableCell>{skill.name}</TableCell>
+                <TableCell>{skill.offeredBy}</TableCell>
+                <TableCell>{skill.mode}</TableCell>
+                <TableCell>{skill.duration}</TableCell>
+                <TableCell>{skill.fee}</TableCell>
                 <TableCell>
                   <Button
                     variant="outlined"
                     color="primary"
                     size="small"
-                    onClick={() => alert(`Viewing certificate for ${fest.name}`)}
+                    onClick={() => alert(`Viewing certificate for ${skill.name}`)}
                   >
                     View Certificate
                   </Button>
@@ -61,4 +57,4 @@ function TechFests({ techFests }) {
   );
 }
 
-export default TechFests;
+export default Skills;
