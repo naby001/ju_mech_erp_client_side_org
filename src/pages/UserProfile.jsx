@@ -46,18 +46,24 @@ export default function UserProfile() {
 
   const clubs = [
     {
-      name: "Robotics Club",
-      description: "A club for robotics enthusiasts to build and innovate.",
+      name: "Mechatronics Club",
+      role: "Technical Team Lead",
+      accolades: "Best Project Award 2023",
+      achievements: "Developed a robotic arm",
       image: "/path/to/robotics-club.jpg",
     },
     {
-      name: "Coding Club",
-      description: "A club for coders to collaborate and learn new technologies.",
+      name: "ISHRAE",
+      role: "Technical Member",
+      accolades: "Best Design Award 2023",
+      achievements: "Participated in HVAC design competition",
       image: "/path/to/coding-club.jpg",
     },
     {
-      name: "Drama Club",
-      description: "A club for students passionate about acting and theater.",
+      name: "Motosports Club",
+      role: "Powertrain Team Member",
+      accolades: "Best Performance Award 2023",
+      achievements: "Designed a fuel-efficient engine",
       image: "/path/to/drama-club.jpg",
     },
   ];

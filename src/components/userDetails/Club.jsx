@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Typography, Grid, Card, CardContent, Avatar } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Avatar,
+  Button,
+} from "@mui/material";
 
 function Club({ clubs }) {
   return (
@@ -10,7 +18,14 @@ function Club({ clubs }) {
       <Grid container spacing={2}>
         {clubs.map((club, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card sx={{ textAlign: "center", padding: "0px", overflow: "visible" }}>
+            <Card
+              sx={{
+                textAlign: "center",
+                padding: "0px",
+                overflow: "visible",
+                cursor: "pointer",
+              }}
+            >
               {/* Wrapper for Avatar with Background */}
               <Box
                 sx={{
@@ -38,12 +53,33 @@ function Club({ clubs }) {
                 />
               </Box>
               <CardContent>
-                <Typography variant="h6" component="h3" gutterBottom>
+                <Typography
+                  variant="h6"
+                  component="h3"
+                  sx={{ color: "#b70924" }}
+                  gutterBottom
+                >
                   {club.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {club.description}
+                  {club.role}
                 </Typography>
+                <Typography variant="body1" color="text.primary">
+                  Accolades: {club.accolades}
+                </Typography>
+                <Typography variant="body1" color="text.primary">
+                  Achievements: {club.achievements}
+                </Typography>
+                {/* Show Certificate Button */}
+                <Button
+                  variant="outlined"
+                  color="#b70924"
+                  size="small"
+                  sx={{ mt: 2, color: "#b70924" }}
+                  onClick={() => alert(`Viewing certificate for ${club.name}`)}
+                >
+                  View Certificate
+                </Button>
               </CardContent>
             </Card>
           </Grid>
