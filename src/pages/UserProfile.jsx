@@ -11,6 +11,7 @@ import UserDetailsRightGrade from "../components/userDetails/UserDetailsRightGra
 import ProfessionalElective from "../components/userDetails/ProfessionalElective";
 import OpenElective from "../components/userDetails/OpenElective";
 import Projects from "../components/userDetails/Projects";
+import Club from "../components/userDetails/Club";
 
 //? Static details of the component page
 export default function UserProfile() {
@@ -41,6 +42,24 @@ export default function UserProfile() {
     "Introduction to Psychology",
     "Environmental Science",
     "Entrepreneurship Development",
+  ];
+
+  const clubs = [
+    {
+      name: "Robotics Club",
+      description: "A club for robotics enthusiasts to build and innovate.",
+      image: "/path/to/robotics-club.jpg",
+    },
+    {
+      name: "Coding Club",
+      description: "A club for coders to collaborate and learn new technologies.",
+      image: "/path/to/coding-club.jpg",
+    },
+    {
+      name: "Drama Club",
+      description: "A club for students passionate about acting and theater.",
+      image: "/path/to/drama-club.jpg",
+    },
   ];
 
   return (
@@ -85,7 +104,6 @@ export default function UserProfile() {
           <Typography variant="h4" component="h1" sx={{fontWeight: "bold"}} gutterBottom>
             Welcome, {user.fullName}
           </Typography>
-
           {/* Grade details of the user */}
           <UserDetailsRightGrade sgpaData = {sgpaData}/>
           {/* Professional Electives Section */}
@@ -94,6 +112,8 @@ export default function UserProfile() {
           <OpenElective electives={openElectives} />
           {/* Projects done by the candidate */}
           <Projects />
+          {/* Clubs joined by the candidate */}
+          <Club clubs={clubs} />
         </Box>
       </Box>
     </Box>
