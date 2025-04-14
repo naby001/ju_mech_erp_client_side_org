@@ -19,6 +19,8 @@ import SocialActivities from "../components/userDetails/SocialActivities";
 import Seminar from "../components/userDetails/Seminar";
 import CompetitiveExam from "../components/userDetails/CompetitiveExam";
 import HigherStudy from "../components/userDetails/HigherStudy";
+import Placement from "../components/userDetails/Placement";
+import StartUp from "../components/userDetails/StartUp";
 
 //? Static details of the component page
 export default function UserProfile() {
@@ -225,6 +227,43 @@ export default function UserProfile() {
     country: "United States",
   };
 
+  const offers = [
+    {
+      company: "Google",
+      position: "Software Engineer",
+      enrollmentType: "Full-Time",
+      recruitmentType: "On-Campus",
+      year: 2023,
+      package: "$120,000 per annum",
+      accepted: false, // This offer is accepted
+    },
+    {
+      company: "Microsoft",
+      position: "Cloud Engineer",
+      enrollmentType: "Full-Time",
+      recruitmentType: "Off-Campus",
+      year: 2023,
+      package: "$110,000 per annum",
+      accepted: true, // This offer is not accepted
+    },
+    {
+      company: "Amazon",
+      position: "Data Scientist",
+      enrollmentType: "Internship",
+      recruitmentType: "On-Campus",
+      year: 2022,
+      package: "$80,000 per annum",
+      accepted: false, // This offer is not accepted
+    },
+  ];
+
+  const startupDetails = {
+    pastInitiatives: "Developed a food delivery startup during college, focusing on sustainable packaging.",
+    futureInterest: "Interested in forming a tech startup focusing on AI-driven solutions.",
+    universitySupport: true,
+    externalSupport: false,
+  };
+
   return (
     <Box
       sx={{
@@ -293,6 +332,10 @@ export default function UserProfile() {
           <CompetitiveExam exams={exams} />
           {/* Higher studies the user is pursueing */}
           <HigherStudy higherStudy={higherStudy} />
+          {/* Placement offers got by the user */}
+          <Placement offers={offers} />
+          {/* Startups */}
+          <StartUp startupDetails={startupDetails} />
         </Box>
       </Box>
     </Box>
