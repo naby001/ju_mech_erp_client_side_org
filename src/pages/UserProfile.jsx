@@ -17,6 +17,8 @@ import Leadership from "../components/userDetails/Leadership";
 import Skills from "../components/userDetails/Skills";
 import SocialActivities from "../components/userDetails/SocialActivities";
 import Seminar from "../components/userDetails/Seminar";
+import CompetitiveExam from "../components/userDetails/CompetitiveExam";
+import HigherStudy from "../components/userDetails/HigherStudy";
 
 //? Static details of the component page
 export default function UserProfile() {
@@ -189,6 +191,40 @@ export default function UserProfile() {
     },
   ];
 
+  const exams = [
+    {
+      name: "GATE",
+      year: 2023,
+      specificTraining: true,
+      trainingName: "GATE Coaching",
+      trainingType: "Offline",
+      trainingMode: "Instructor-led",
+    },
+    {
+      name: "GRE",
+      year: 2022,
+      specificTraining: false,
+      trainingName: null,
+      trainingType: null,
+      trainingMode: null,
+    },
+    {
+      name: "CAT",
+      year: 2021,
+      specificTraining: true,
+      trainingName: "CAT Prep Course",
+      trainingType: "Online",
+      trainingMode: "Self-paced",
+    },
+  ];
+
+  const higherStudy = {
+    programme: "Master of Science in Artificial Intelligence",
+    tenure: "2 years",
+    institute: "Stanford University",
+    country: "United States",
+  };
+
   return (
     <Box
       sx={{
@@ -253,6 +289,10 @@ export default function UserProfile() {
           <SocialActivities activities={socialActivities} />;
           {/* Seminars attended by the user */}
           <Seminar seminars={seminars} />
+          {/* Competitive Exams attended by the user */}
+          <CompetitiveExam exams={exams} />
+          {/* Higher studies the user is pursueing */}
+          <HigherStudy higherStudy={higherStudy} />
         </Box>
       </Box>
     </Box>

@@ -14,8 +14,8 @@ import {
 
 function Seminar({ seminars }) {
   return (
-    <Box>
-      <Typography variant="h6" component="h2" gutterBottom>
+    <Box sx={{ mb: 2}}>
+      <Typography variant="h4" component="h4" gutterBottom>
         Seminars
       </Typography>
       <TableContainer component={Paper}>
