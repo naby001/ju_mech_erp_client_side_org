@@ -1,3 +1,4 @@
+///? importing necessary libraries and components
 import React from "react";
 import {
   Box,
@@ -12,6 +13,7 @@ import {
   Button,
 } from "@mui/material";
 
+//^ Shows the competitive exams taken by the user in the form of table
 function CompetitiveExam({ exams }) {
   return (
     <Box sx={{ mb: 2 }}>
@@ -33,7 +35,15 @@ function CompetitiveExam({ exams }) {
           </TableHead>
           <TableBody>
             {exams.map((exam, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} sx={{
+                transition: "transform 0.2s ease-in-out",
+                "&:hover": {
+                  backgroundColor: "#f5f5f5",
+                },
+                "&:last-child td, &:last-child th": {
+                  border: 0,
+                },
+              }}>
                 <TableCell>{exam.name}</TableCell>
                 <TableCell>{exam.year}</TableCell>
                 <TableCell>{exam.specificTraining ? "Yes" : "No"}</TableCell>

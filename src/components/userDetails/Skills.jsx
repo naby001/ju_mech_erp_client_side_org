@@ -32,7 +32,15 @@ function Skills({ skills }) {
           </TableHead>
           <TableBody>
             {skills.map((skill, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} sx={{
+                transition: "transform 0.2s ease-in-out",
+                "&:hover": {
+                  backgroundColor: "#f5f5f5",
+                },
+                "&:last-child td, &:last-child th": {
+                  border: 0,
+                },
+              }}>
                 <TableCell>{skill.name}</TableCell>
                 <TableCell>{skill.offeredBy}</TableCell>
                 <TableCell>{skill.mode}</TableCell>

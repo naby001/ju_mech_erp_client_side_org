@@ -1,3 +1,4 @@
+//? importing necessary libraries and components
 import React from "react";
 import {
   Box,
@@ -58,7 +59,15 @@ function Projects() {
           </TableHead>
           <TableBody>
             {projectData.map((project, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} sx={{
+                transition: "transform 0.2s ease-in-out",
+                "&:hover": {
+                  backgroundColor: "#f5f5f5",
+                },
+                "&:last-child td, &:last-child th": {
+                  border: 0,
+                },
+              }}>
                 <TableCell>{project.type}</TableCell>
                 <TableCell>{project.mode}</TableCell>
                 <TableCell>{project.duration}</TableCell>

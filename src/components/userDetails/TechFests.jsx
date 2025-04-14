@@ -34,7 +34,15 @@ function TechFests({ techFests }) {
           </TableHead>
           <TableBody>
             {techFests.map((fest, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} sx={{
+                transition: "transform 0.2s ease-in-out",
+                "&:hover": {
+                  backgroundColor: "#f5f5f5",
+                },
+                "&:last-child td, &:last-child th": {
+                  border: 0,
+                },
+              }}>
                 <TableCell>{fest.name}</TableCell>
                 <TableCell>{fest.organiser}</TableCell>
                 <TableCell>{fest.eventType}</TableCell>

@@ -32,7 +32,15 @@ function Seminar({ seminars }) {
           </TableHead>
           <TableBody>
             {seminars.map((seminar, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} sx={{
+                transition: "transform 0.2s ease-in-out",
+                "&:hover": {
+                  backgroundColor: "#f5f5f5",
+                },
+                "&:last-child td, &:last-child th": {
+                  border: 0,
+                },
+              }}>
                 <TableCell>{seminar.name}</TableCell>
                 <TableCell>{seminar.venue}</TableCell>
                 <TableCell>{seminar.date}</TableCell>

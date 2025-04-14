@@ -1,3 +1,4 @@
+//? importing library components in the grade component
 import React from 'react'
 import {
   Box,
@@ -11,9 +12,11 @@ import {
   Paper,
 } from "@mui/material";
 
-function UserDetailsRightGrade({sgpaData}) {
+
+//^ Showing the data in table format for grade component
+function UserDetailsRightGrade({ sgpaData }) {
   return (
-    <Box sx={{mb:2}}>
+    <Box sx={{ mb: 2 }}>
       <Typography variant="h4" component="h4" gutterBottom>
         Semester-wise SGPA
       </Typography>
@@ -27,7 +30,15 @@ function UserDetailsRightGrade({sgpaData}) {
           </TableHead>
           <TableBody>
             {sgpaData.map((row, index) => (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                sx={{
+                  transition: "transform 0.2s ease-in-out",
+                  "&:hover": {
+                    backgroundColor: "#f5f5f5",
+                  },
+                }}
+              >
                 <TableCell>{row.semester}</TableCell>
                 <TableCell>{row.sgpa}</TableCell>
               </TableRow>

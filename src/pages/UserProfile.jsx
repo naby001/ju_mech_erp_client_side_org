@@ -1,3 +1,4 @@
+//? importing library components
 import React, { useState } from "react";
 import {
   Box,
@@ -7,7 +8,7 @@ import {
 //? Componenets of the regular user profile page 
 import Navbar from "../components/Navbar";
 import UserDetailsLeft from "../components/userDetails/UserDetailsLeft";
-import UserDetailsRightGrade from "../components/userDetails/UserDetailsRightGrade";
+import UserDetailsRightGrade from "../components/userDetails/Grade";
 import ProfessionalElective from "../components/userDetails/ProfessionalElective";
 import OpenElective from "../components/userDetails/OpenElective";
 import Projects from "../components/userDetails/Projects";
@@ -24,6 +25,9 @@ import StartUp from "../components/userDetails/StartUp";
 
 //? Static details of the component page
 export default function UserProfile() {
+
+  //* static datas of the user, later on dynamic data will be added
+
   const [user, setUser] = useState({
     fullName: "Abhirup Guha Roy",
     year: "2nd Year",
@@ -336,6 +340,7 @@ export default function UserProfile() {
           <Placement offers={offers} />
           {/* Startups */}
           <StartUp startupDetails={startupDetails} />
+
         </Box>
       </Box>
     </Box>
