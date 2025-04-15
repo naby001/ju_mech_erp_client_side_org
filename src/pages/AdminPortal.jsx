@@ -7,7 +7,8 @@ import {
 
 //? Componenets of the regular user profile page 
 import Navbar from "../components/Navbar";
-import AdminsPanel from "../components/adminDetails/AdminsPanel"; // Import the AdminsPanel component
+import AdminsPanel from "../components/adminDetails/AdminsPanel";
+import AdminDetails from "../components/adminDetails/AdminDetails";
 
 //? Static details of the component page
 export default function AdminPortal() {
@@ -16,18 +17,21 @@ export default function AdminPortal() {
 
     const admin = {
         fullName: "Abhirup Guha Roy",
-        role: "Super Admin",
+        role: "Admin",
         email: "admin@example.com",
         phone: "+91 9876543210",
         avatar: "/default-avatar.png", // Replace with actual avatar URL
-        department: "Administration",
+        department: "Mechanical Engineering",
+        lobby: "Design",
         lastLogin: "2025-04-14 10:30 AM",
-    };
+        description:
+          "The admin is responsible for managing the student profiles, handling pending requests, and configuring system settings. They play a crucial role in ensuring the smooth functioning of the portal and maintaining data integrity.",
+      };
 
     const renderActiveComponent = () => {
         switch (activeComponent) {
           case "AdminDetails":
-            return <Typography variant="h5">Admin Details Component</Typography>;
+            return <AdminDetails admin={admin} />;
           case "ManageProfiles":
             return <Typography variant="h5">Manage Student Profiles Component</Typography>;
           case "PendingRequests":
