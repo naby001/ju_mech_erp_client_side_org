@@ -8,8 +8,7 @@ import {
   Select, 
   MenuItem, 
   FormControlLabel, 
-  Checkbox, 
-  Divider,
+  Checkbox,
   Box
 } from "@mui/material";
 import { motion } from "framer-motion";
@@ -52,7 +51,6 @@ const FloatingLabelTextField = ({ label, name, type = "text", value, onChange, r
         outline: "none",
         color: "#222",
         transition: "all 0.3s ease",
-       // backdropFilter: "blur(10px)",
       }}
       whileFocus={{
         border: "2px solid #635acc",
@@ -62,48 +60,7 @@ const FloatingLabelTextField = ({ label, name, type = "text", value, onChange, r
   </Box>
 );
 
-export default function PersonalInfoForm({ onChange, formData, handleChange }) {
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   dob: "",
-  //   gender: "",
-  //   category: "",
-  //   isPwd: false,
-  //   mobileNo: "",
-  //   whatsappNo: "",
-  //   email: "",
-  //   alternateEmail: "",
-  //   presentAddress: "",
-  //   presentState: "",
-  //   permanentAddress: "",
-  //   permanentState: "",
-  //   emergencyContactName: "",
-  //   emergencyContactNumber: "",
-  //   emergencyContactRelation: "",
-  //   nationality: "",
-  //   idType: "",
-  //   idNumber: "",
-  //   familyIncome: ""
-  // });
-
-  // const handleChange = (event) => {
-  //   const { name, value, checked, type } = event.target;
-  //   const newValue = type === 'checkbox' ? checked : value;
-    
-  //   setFormData({
-  //     ...formData,
-  //     [name]: newValue
-  //   });
-    
-  //   onChange({
-  //     personalInfo: {
-  //       ...formData,
-  //       [name]: newValue
-  //     }
-  //   });
-  // };
-
-  
+export default function PersonalInfoForm({ formData, handleChange }) {
   return (
     <Box sx={{ }}>
       <Typography variant="h4" sx={{mb:5}} gutterBottom>
@@ -186,12 +143,14 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Form portion to take contact detials */}
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom>
             Contact Details
           </Typography>
         </Grid>
         
+        {/* Taking Student Mobile number */}
         <Grid item xs={12} md={6}>
           <TextField
             required
@@ -203,6 +162,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking WhatsApp number */}
         <Grid item xs={12} md={6}>
           <TextField
             fullWidth
@@ -213,6 +173,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking email of the student */}
         <Grid item xs={12} md={6}>
           <TextField
             required
@@ -225,6 +186,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking alternate email of the student */}
         <Grid item xs={12} md={6}>
           <TextField
             fullWidth
@@ -236,12 +198,14 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking present location details of the student */}
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom>
             Present Address
           </Typography>
         </Grid>
         
+        {/* Taking present address details of the student */}
         <Grid item xs={12} md={8}>
           <TextField
             required
@@ -255,6 +219,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking present state detials of the student */}
         <Grid item xs={12} md={4}>
           <TextField
             required
@@ -266,12 +231,14 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking permanent location details of the student */}
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom>
             Permanent Address
           </Typography>
         </Grid>
         
+        {/* Taking permanent address details of the student */}
         <Grid item xs={12} md={8}>
           <TextField
             required
@@ -285,6 +252,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking present state details of the student */}
         <Grid item xs={12} md={4}>
           <TextField
             required
@@ -296,12 +264,14 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking eergency contact details */}
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom>
             Emergency Contact
           </Typography>
         </Grid>
         
+        {/* Taking emergency contact name */}
         <Grid item xs={12} md={4}>
           <TextField
             required
@@ -313,6 +283,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking emergency contact number */}
         <Grid item xs={12} md={4}>
           <TextField
             required
@@ -324,6 +295,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking emergency contact relation */}
         <Grid item xs={12} md={4}>
           <TextField
             required
@@ -335,12 +307,14 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Taking nationality & indentification details */}
         <Grid item xs={12}>
           <Typography variant="h6" gutterBottom>
             Nationality and Identification
           </Typography>
         </Grid>
         
+        {/* Nationality of the student */}
         <Grid item xs={12} md={4}>
           <TextField
             required
@@ -352,6 +326,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Id type of the student for verification */}
         <Grid item xs={12} md={4}>
           <FormControl fullWidth required>
             <InputLabel>ID Type</InputLabel>
@@ -367,6 +342,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           </FormControl>
         </Grid>
         
+        {/* id number of the student */}
         <Grid item xs={12} md={4}>
           <TextField
             required
@@ -378,6 +354,7 @@ export default function PersonalInfoForm({ onChange, formData, handleChange }) {
           />
         </Grid>
         
+        {/* Family income of the student */}
         <Grid item xs={12} md={6}>
           <TextField
             required

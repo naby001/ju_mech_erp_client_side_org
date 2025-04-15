@@ -3,14 +3,17 @@ import { Box, Button } from "@mui/material";
 import { motion } from "framer-motion";
 
 const Sidebar = ({ activeSection, setActiveSection }) => {
-  // sections for user application form  
-  const sections = [ "General Info", "Enrollment Details", "Academic Background" ,  "Academic Info" 
-        ,  "Placement" 
-        ,"Co-Curricular and Extra-Curricular Activities" 
-        ,  "Miscallaneous" 
-        
-      ];
-      
+  // sections for user application form
+  const sections = [
+    "General Info",
+    "Enrollment Details",
+    "Academic Background",
+    "Academic Info",
+    "Placement",
+    "Co-Curricular and Extra-Curricular Activities",
+    "Miscallaneous",
+  ];
+
   return (
     <Box
       //box animation properties using framer motion

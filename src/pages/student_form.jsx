@@ -1,25 +1,22 @@
 import React, { useState } from "react";
 import { Box, Button, Typography, useMediaQuery, Drawer, IconButton } from "@mui/material";
-import { motion } from "framer-motion";
-import MenuIcon from "@mui/icons-material/Menu";
-import Sidebar from "../components/Sidebar"; // side of the form
-import PersonalInfoForm from "../forms/personal-info-form"; // form component for hanlding the personal info
-import Navbar from "../components/Navbar";// navbar 
+import PersonalInfoForm from "../forms/personal-info-form"; // form component for hanlding the personal info 
 import EnrollmentDetailsForm from "../forms/enrollment-details-forms"; // form component for handling the enrollment details
 import AcademicBackgroundForm from "../forms/academic-background-form"; // form component for hanlding the acedamic component details
 import AcademicInfoForm from "../forms/academic-info-form"; // form component for handling the university acedamic info
 import ProgressionForm from "../forms/progression-form"; // form component for handling the placement details of the student
 import CoCurricularForm from "../forms/co-curricular-form"; // form component for handling the co-curricular and extra-curricular activities
 import MiscellaneousForms from "../forms/miscellaneous-forms"; // form component for handling the miscellenous details of the student
-
-
+// importing components
+import Sidebar from "../components/Sidebar"; // sidebar component
 
 export default function MultiStepForm({ onChange }) {
+
   const [activeSection, setActiveSection] = useState(0); //state to control session
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:900px)"); // responsive state property
 
-  // state object to store personal details/general info
+  //~ state object to store personal details/general info of student
   const [personalformData, setPersonalFormData] = useState({
     name: "",
     dob: "",
@@ -43,7 +40,7 @@ export default function MultiStepForm({ onChange }) {
     familyIncome: ""
   });
 
-  // State to control enrollment details of the student resistered in JU
+  //~ State to control enrollment details of the student resistered in JU
   const [enrollformData, setEnrollFormData] = useState({
     rollNumber: "",
     section: "",
@@ -60,7 +57,7 @@ export default function MultiStepForm({ onChange }) {
     scholarshipDetails: ""
   });
 
-  //state to control school acedamic background details
+  //~ state to control school acedamic background details
   const [acadbackformData, setAcadBackFormData] = useState({
     secondaryMarks: "",
     secondaryYear: "",
@@ -72,7 +69,7 @@ export default function MultiStepForm({ onChange }) {
     entranceExamYear: ""
   });
 
-  //state to control acedamic details at the university
+  //~ state to control acedamic details at the university
   const [acedamicformData, setAcedamicFormData] = useState({
     grades: [{
       semester: 1,
@@ -149,6 +146,7 @@ export default function MultiStepForm({ onChange }) {
 
   })
 
+  //? function to handle the change in the personal info form
   const handlepersonalChange = (event) => {
     const { name, value, checked, type } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
@@ -157,15 +155,9 @@ export default function MultiStepForm({ onChange }) {
       ...personalformData,
       [name]: newValue
     });
-
-    onChange({
-      personalInfo: {
-        ...personalformData,
-        [name]: newValue
-      }
-    });
   };
 
+  //? function to handle the change in the enrollment details form
   const handleenrollChange = (event) => {
     const { name, value, checked, type } = event.target;
     const newValue = type === 'checkbox' ? checked : value;
@@ -174,15 +166,9 @@ export default function MultiStepForm({ onChange }) {
       ...enrollformData,
       [name]: newValue
     });
-
-    onChange({
-      enrollmentDetails: {
-        ...formData,
-        [name]: newValue
-      }
-    });
   };
 
+  //? function to handle the change in the academic background form
   const handleacadbackChange = (event) => {
     const { name, value } = event.target;
 
@@ -190,15 +176,9 @@ export default function MultiStepForm({ onChange }) {
       ...acadbackformData,
       [name]: value
     });
-
-    onChange({
-      academicBackground: {
-        ...formData,
-        [name]: value
-      }
-    });
   };
 
+  //? function to handle the change in the academic info form
   const handleacedamicChange = (event) => {
     const { name, value } = event.target
 
@@ -230,7 +210,37 @@ export default function MultiStepForm({ onChange }) {
     // })
   }
 
-  // array of dicts containing section titles and component tags
+  //^ For debugging purpose (checking form details in console)
+  const logStateValues = (activeComponent) => {
+    console.log("Active Component:", activeComponent);
+    switch(activeComponent){
+      case "General Info":
+        console.log("Personal Info:", personalformData);
+        break;
+      case "Enrollment Details":
+        console.log("Enrollment Details:", enrollformData);
+        break;
+      case "Academic Background":
+        console.log("Academic Background:", acadbackformData);
+        break;
+      case "Academic Info":
+        console.log("Academic Info:", acedamicformData);
+        break;
+      case "Placement":
+        console.log("Placement Details:", placemenformtData);
+        break;
+      case "Co-Curricular and Extra-Curricular Activities":
+        console.log("Co-Curricular and Extra-Curricular Activities:", curricularformData);
+        break;
+      case "Miscellaneous":
+        console.log("Miscellaneous:", miscformData);
+        break;
+      default:
+        console.log("Unknown Section");
+    }
+  };
+
+  //? array of dicts containing section titles and component tags
   const sections = [
     { title: "General Info", component: <PersonalInfoForm formData={personalformData} handleChange={handlepersonalChange} /> },
     { title: "Enrollment Details", component: <EnrollmentDetailsForm formData={enrollformData} handleChange={handleenrollChange} /> },
@@ -251,10 +261,9 @@ export default function MultiStepForm({ onChange }) {
         flexDirection: isMobile ? "column" : "row",
         overflowY: isMobile ? "auto" : "hidden",
         backgroundColor:'white',
-        borderRadius:10
       }}
     >
-      {/* Sidebar (Desktop and Mobile)
+      {/* Sidebar (Desktop and Mobile) */}
       {!isMobile && (
         <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
       )}
@@ -275,7 +284,7 @@ export default function MultiStepForm({ onChange }) {
             <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
           </Drawer>
         </>
-      )} */}
+      )}
       {/* Form Section */}
       <Box
         key={activeSection}
@@ -312,6 +321,20 @@ export default function MultiStepForm({ onChange }) {
             }
           >
             Next
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{
+              mt: 3,
+              borderRadius: "10px",
+              color: "#b70924",
+              borderColor: "#b70924",
+              "&:hover": { background: "#f5f5f5" },
+              width: '20%'
+            }}
+            onClick={() => logStateValues(sections[activeSection].title)}
+          >
+            Log State
           </Button>
           </Box>
       </Box>
