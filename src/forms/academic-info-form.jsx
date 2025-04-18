@@ -21,26 +21,32 @@ import {
   Select,
   MenuItem,
   Chip,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import { Add, Delete, CloudUpload, Cancel } from "@mui/icons-material";
 
+//* List of Electives (Professional & Open)
 const electivesList = ["Elective 1", "Elective 2", "Elective 3", "Elective 4"];
-const openElectivesList = ["Open Elective 1", "Open Elective 2", "Open Elective 3"];
+const openElectivesList = [
+  "Open Elective 1",
+  "Open Elective 2",
+  "Open Elective 3",
+];
 
-export default function AcademicInfoForm({ onChange, formData, handleChange }) {
-  const [tabValue, setTabValue] = useState(0);
+export default function AcademicInfoForm({ formData, handleChange }) {
+  //* State variables
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const [projects, setProjects] = useState([{}]);
-  const [journals, setJournals] = useState([{}]);
-
-  const addProject = () => setProjects([...projects, {}]);
-  const addJournal = () => setJournals([...journals, {}]);
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
+  //& Addition functions for adding student details
+  //? Addition of semester
+  const addSemester = () => {
+    const newSem = [
+      ...formData.grades,
+      { semester: formData.grades.length + 1, sgpa: "", cgpa: "" },
+    ];
+    handleChange({ target: { name: "grades", value: newSem } });
   };
 
-  // Add selected Professional elective
+  //? Adding of Professional elective
   const handleProfessionalChange = (event) => {
     const newElective = event.target.value;
 
@@ -55,7 +61,7 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
     }
   };
 
-  // Add selected Open elective
+  //? Addition of Open elective
   const handleOpenChange = (event) => {
     const newElective = event.target.value;
 
@@ -70,34 +76,73 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
     }
   };
 
-  // Remove Professional elective
-  const removeProfessional = (elective) => {
-    const updatedProfElectives = formData.selectedProfessional.filter((item) => item !== elective);
-    handleChange({ target: { name: "selectedProfessional", value: updatedProfElectives } });
+  //? Addition of Projects
+  const addProject = () => {
+    const newProject = [
+      ...formData.projectDetails,
+      {
+        title: "",
+        type: "",
+        mode: "",
+        duration: "",
+        year: "",
+        grading: "",
+        supervisor: "",
+        cosupervisor: "",
+        institute: "",
+        sdgConnection: false,
+        outcome: "",
+        certificate: [],
+      },
+    ];
+    handleChange({ target: { name: "projectDetails", value: newProject } });
   };
 
-  // Remove Open elective
-  const removeOpen = (elective) => {
-    const updatedOpenElectives = formData.selectedOpen.filter((item) => item !== elective);
-    handleChange({ target: { name: "selectedOpen", value: updatedOpenElectives } });
-  };
-
-  //functions to add and remove semester and update semester details
-  const addSemester = () => {
-    const newSem = [...formData.grades, { semester: formData.grades.length + 1, sgpa: "", cgpa: "" }]
-    handleChange({ target: { name: "grades", value: newSem } })
-  }
-
+  //& Removal functions for removing student details
+  //? Removing semester
   const removeSemester = (index) => {
-    const modifiedSem = formData.grades.filter((_, i) => i != index)
-    handleChange({ target: { name: "grades", value: modifiedSem } })
+    const modifiedSem = formData.grades.filter((_, i) => i != index);
+    handleChange({ target: { name: "grades", value: modifiedSem } });
   };
 
+  //? Removing Professional elective
+  const removeProfessional = (elective) => {
+    const updatedProfElectives = formData.selectedProfessional.filter(
+      (item) => item !== elective
+    );
+    handleChange({
+      target: { name: "selectedProfessional", value: updatedProfElectives },
+    });
+  };
+
+  //? Removing Open elective
+  const removeOpen = (elective) => {
+    const updatedOpenElectives = formData.selectedOpen.filter(
+      (item) => item !== elective
+    );
+    handleChange({
+      target: { name: "selectedOpen", value: updatedOpenElectives },
+    });
+  };
+
+  //& Function to handle updates in diffrent acedamic input fields
+  //? Update semester details
   const handleGradeChange = (index, field, value) => {
     const updatedGrades = formData.grades.map((grade, i) =>
       i === index ? { ...grade, [field]: value } : grade
     );
-    handleChange({ target: { name: "grades", value: updatedGrades } })
+    handleChange({ target: { name: "grades", value: updatedGrades } });
+  };
+
+  //? handle project entry
+  const handleProjectChange = (index, field, value) => {
+    console.log("Project Change", index, field, value);
+    const updatedProjects = formData.projectDetails.map((project, i) =>
+      i === index ? { ...formData.projectDetails[i], [field]: value } : project
+    );
+    handleChange({
+      target: { name: "projectDetails", value: updatedProjects },
+    });
   };
 
   return (
@@ -107,6 +152,7 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
       </Typography>
       <Divider className="mb-4" />
 
+      {/* Semester grades of the student */}
       <Box sx={{ p: 3 }}>
         <Typography variant="h6" gutterBottom>
           Semester-wise Grades
@@ -124,27 +170,34 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
             <TableBody>
               {formData.grades.map((grade, index) => (
                 <TableRow key={index}>
+                  {/* Semester Number */}
                   <TableCell>{grade.semester}</TableCell>
+                  {/* Semester SGPA */}
                   <TableCell>
                     <TextField
                       fullWidth
-                      name='grades'
+                      name="grades"
                       value={grade.sgpa}
-                      onChange={(e) => handleGradeChange(index, 'sgpa', e.target.value)}
-                      //type="number"
+                      onChange={(e) =>
+                        handleGradeChange(index, "sgpa", e.target.value)
+                      }
                       inputProps={{ min: 0, max: 10, step: 0.01 }}
-                      sx={{ '& .MuiInputBase-root': { height: 32 } }}
+                      sx={{ "& .MuiInputBase-root": { height: 32 } }}
                     />
                   </TableCell>
-
-                  <TableCell sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <IconButton >
+                  {/* Table icons */}
+                  <TableCell sx={{ display: "flex", flexDirection: "row" }}>
+                    <IconButton>
                       <CloudUpload />
                     </IconButton>
                     <IconButton onClick={addSemester}>
                       <Add />
                     </IconButton>
-                    <IconButton color="error" onClick={() => removeSemester(index)} disabled={formData.grades.length === 1}>
+                    <IconButton
+                      color="error"
+                      onClick={() => removeSemester(index)}
+                      disabled={formData.grades.length === 1}
+                    >
                       <Delete />
                     </IconButton>
                   </TableCell>
@@ -155,7 +208,17 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
         </TableContainer>
         <Divider sx={{ my: 4, bgcolor: "rgba(255, 255, 255, 0.3)" }} />
 
-        <FormControl fullWidth variant="outlined" sx={{ mb: 4, borderRadius: 2, backgroundColor: "rgba(255, 255, 255, 0.2)", backdropFilter: "blur(5px)" }}>
+        {/* Selection form for professional electives */}
+        <FormControl
+          fullWidth
+          variant="outlined"
+          sx={{
+            mb: 4,
+            borderRadius: 2,
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            backdropFilter: "blur(5px)",
+          }}
+        >
           <Typography
             variant="h6"
             sx={{
@@ -168,7 +231,11 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
           >
             Choose Professional Electives
           </Typography>
-          <Select onChange={handleProfessionalChange} value="" sx={{ borderRadius: 2 }}>
+          <Select
+            onChange={handleProfessionalChange}
+            value=""
+            sx={{ borderRadius: 2 }}
+          >
             {electivesList.map((elective) => (
               <MenuItem key={elective} value={elective}>
                 {elective}
@@ -201,7 +268,7 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
 
         <Divider sx={{ my: 4, bgcolor: "rgba(255, 255, 255, 0.3)" }} />
 
-        {/* Open Electives */}
+        {/* Selection form for Open Electives */}
         <Typography
           variant="h6"
           sx={{
@@ -214,7 +281,16 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
         >
           Choose Open Electives
         </Typography>
-        <FormControl fullWidth variant="outlined" sx={{ mb: 4, borderRadius: 2, backgroundColor: "rgba(255, 255, 255, 0.2)", backdropFilter: "blur(5px)" }}>
+        <FormControl
+          fullWidth
+          variant="outlined"
+          sx={{
+            mb: 4,
+            borderRadius: 2,
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            backdropFilter: "blur(5px)",
+          }}
+        >
           <InputLabel>Select Open Elective</InputLabel>
           <Select onChange={handleOpenChange} value="" sx={{ borderRadius: 2 }}>
             {openElectivesList.map((elective) => (
@@ -237,7 +313,8 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
                   mb: 1,
                   fontSize: "14px",
                   fontWeight: "bold",
-                  background: "linear-gradient(135deg, #ff9a8b, #ff6a88, #ff99ac)",
+                  background:
+                    "linear-gradient(135deg, #ff9a8b, #ff6a88, #ff99ac)",
                   color: "#fff",
                 }}
                 onDelete={() => removeOpen(elec)}
@@ -247,103 +324,268 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
           </Box>
         )}
 
-        <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}>Project Entry</Typography>
+        {/* Project info of the user */}
+        <Typography
+          variant="h5"
+          sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+        >
+          Project Entry
+        </Typography>
 
         {isMobile ? (
-          projects.map((_, index) => (
-            <Paper key={index} sx={{ p: 3, mb: 2, borderRadius: 2, boxShadow: 3 }}>
+          formData.projectDetails.map((value, index) => (
+            <Paper
+              key={index}
+              sx={{ p: 3, mb: 2, borderRadius: 2, boxShadow: 3 }}
+            >
               <Typography variant="h6">Project {index + 1}</Typography>
               <FormControl fullWidth sx={{ mb: 2 }}>
                 <InputLabel>Type</InputLabel>
-                <Select>
-                  <MenuItem value="major">Major</MenuItem>
-                  <MenuItem value="minor">Minor</MenuItem>
+                <Select
+                  value={value.type}
+                  Change={(e) =>
+                    handleProjectChange(index, "type", e.target.value)
+                  }
+                >
+                  <MenuItem value="Major">Major</MenuItem>
+                  <MenuItem value="Minor">Minor</MenuItem>
                 </Select>
               </FormControl>
               <FormControl fullWidth sx={{ mb: 2 }}>
                 <InputLabel>Mode</InputLabel>
-                <Select>
-                  <MenuItem value="online">Online</MenuItem>
-                  <MenuItem value="offline">Offline</MenuItem>
+                <Select
+                  value={value.mode}
+                  Change={(e) =>
+                    handleProjectChange(index, "mode", e.target.value)
+                  }
+                >
+                  <MenuItem value="Online">Online</MenuItem>
+                  <MenuItem value="Offline">Offline</MenuItem>
                 </Select>
               </FormControl>
-              <TextField label="Duration" fullWidth sx={{ mb: 2 }} />
-              <TextField label="Year of Work" fullWidth sx={{ mb: 2 }} />
+              <TextField
+                label="Duration"
+                fullWidth
+                sx={{ mb: 2 }}
+                value={value.duration}
+                onChange={(e) =>
+                  handleProjectChange(index, "duration", e.target.value)
+                }
+              />
+              <TextField
+                label="Year of Work"
+                fullWidth
+                sx={{ mb: 2 }}
+                value={value.year || ""}
+                onChange={(e) =>
+                  handleProjectChange(index, "year", e.target.value)
+                }
+              />
               <FormControl fullWidth sx={{ mb: 2 }}>
                 <InputLabel>Graded/Non-Graded</InputLabel>
-                <Select>
-                  <MenuItem value="graded">Graded</MenuItem>
-                  <MenuItem value="non-graded">Non-Graded</MenuItem>
+                <Select
+                  value={value.grading || ""} // Default to an empty string if undefined
+                  onChange={(e) =>
+                    handleProjectChange(index, "grading", e.target.value)
+                  }
+                >
+                  <MenuItem value="Yes">Yes</MenuItem>
+                  <MenuItem value="No">No</MenuItem>
                 </Select>
               </FormControl>
-              <TextField label="Supervisor Name & Institute" fullWidth sx={{ mb: 2 }} />
-              <TextField label="Co-Supervisor Name & Institute" fullWidth sx={{ mb: 2 }} />
+              <TextField
+                label="Supervisor Name & Institute"
+                fullWidth
+                sx={{ mb: 2 }}
+                value={value.supervisor || ""} // Default to an empty string if undefined
+                onChange={(e) =>
+                  handleProjectChange(index, "supervisor", e.target.value)
+                }
+              />
+              <TextField
+                label="Co-Supervisor Name & Institute"
+                fullWidth
+                sx={{ mb: 2 }}
+                value={value.cosupervisor || ""} // Default to an empty string if undefined
+                onChange={(e) =>
+                  handleProjectChange(index, "cosupervisor", e.target.value)
+                }
+              />
               <FormControl fullWidth sx={{ mb: 2 }}>
                 <InputLabel>SDG Connection</InputLabel>
-                <Select>
-                  <MenuItem value="yes">Yes</MenuItem>
-                  <MenuItem value="no">No</MenuItem>
+                <Select
+                  value={value.sdgConnection || ""} // Default to an empty string if undefined
+                  onChange={(e) =>
+                    handleProjectChange(index, "sdgConnection", e.target.value)
+                  }
+                >
+                  <MenuItem value="Yes">Yes</MenuItem>
+                  <MenuItem value="No">No</MenuItem>
                 </Select>
               </FormControl>
-              <Button variant="contained" component="label" startIcon={<CloudUpload />} sx={{ backgroundColor: "#388e3c" }}>
+              <Button
+                variant="contained"
+                component="label"
+                startIcon={<CloudUpload />}
+                sx={{ backgroundColor: "#388e3c" }}
+              >
                 Upload Certificate
                 <input type="file" hidden />
               </Button>
             </Paper>
           ))
         ) : (
-          <TableContainer component={Paper} sx={{ borderRadius: 3, boxShadow: 3 }}>
+          <TableContainer
+            component={Paper}
+            sx={{ borderRadius: 3, boxShadow: 3 }}
+          >
             <Table>
               <TableHead sx={{ backgroundColor: "#635acc" }}>
                 <TableRow>
-                  {["Type", "Mode", "Duration", "Year", "Grading", "Supervisor", "Co-Supervisor", "SDG", "Certificate"].map((header) => (
-                    <TableCell key={header} sx={{ color: "white", fontWeight: "bold" }}>
+                  {[
+                    "Type",
+                    "Mode",
+                    "Duration",
+                    "Year",
+                    "Grading",
+                    "Supervisor",
+                    "Co-Supervisor",
+                    "SDG",
+                    "Certificate",
+                  ].map((header) => (
+                    <TableCell
+                      key={header}
+                      sx={{ color: "white", fontWeight: "bold" }}
+                    >
                       {header}
                     </TableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {projects.map((_, index) => (
-                  <TableRow key={index} sx={{ "&:nth-of-type(odd)": { backgroundColor: "#f9f9f9" } }}>
+                {formData.projectDetails.map((value, index) => (
+                  <TableRow
+                    key={index}
+                    sx={{
+                      "&:nth-of-type(odd)": { backgroundColor: "#f9f9f9" },
+                    }}
+                  >
                     <TableCell>
-                      <Select fullWidth defaultValue="">
-                        <MenuItem value="major">Major</MenuItem>
-                        <MenuItem value="minor">Minor</MenuItem>
+                      <Select
+                        fullWidth
+                        defaultValue=""
+                        value={value.type}
+                        onChange={(e) =>
+                          handleProjectChange(index, "type", e.target.value)
+                        }
+                      >
+                        <MenuItem value="Major">Major</MenuItem>
+                        <MenuItem value="Minor">Minor</MenuItem>
                       </Select>
                     </TableCell>
                     <TableCell>
-                      <Select fullWidth defaultValue="">
-                        <MenuItem value="online">Online</MenuItem>
-                        <MenuItem value="offline">Offline</MenuItem>
+                      <Select
+                        fullWidth
+                        defaultValue=""
+                        value={value.mode || ""}
+                        onChange={(e) =>
+                          handleProjectChange(index, "mode", e.target.value)
+                        }
+                      >
+                        <MenuItem value="Online">Online</MenuItem>
+                        <MenuItem value="Offline">Offline</MenuItem>
                       </Select>
                     </TableCell>
                     <TableCell>
-                      <TextField fullWidth type="number" placeholder="Duration (Months)" />
+                      <TextField
+                        fullWidth
+                        type="number"
+                        placeholder="Duration (Months)"
+                        value={value.duration}
+                        onChange={(e) =>
+                          handleProjectChange(index, "duration", e.target.value)
+                        }
+                      />
                     </TableCell>
                     <TableCell>
-                      <TextField fullWidth type="number" placeholder="Year" />
+                      <TextField
+                        fullWidth
+                        type="number"
+                        placeholder="Year"
+                        value={value.year}
+                        onChange={(e) =>
+                          handleProjectChange(index, "year", e.target.value)
+                        }
+                      />
                     </TableCell>
                     <TableCell>
-                      <Select fullWidth defaultValue="">
-                        <MenuItem value="graded">Graded</MenuItem>
-                        <MenuItem value="non-graded">Non-Graded</MenuItem>
+                      <Select
+                        fullWidth
+                        defaultValue=""
+                        value={value.grading}
+                        onChange={(e) =>
+                          handleProjectChange(index, "grading", e.target.value)
+                        }
+                      >
+                        <MenuItem value="Yes">Yes</MenuItem>
+                        <MenuItem value="No">No</MenuItem>
                       </Select>
                     </TableCell>
                     <TableCell>
-                      <TextField fullWidth placeholder="Supervisor Name" />
+                      <TextField
+                        fullWidth
+                        placeholder="Supervisor Name"
+                        value={value.supervisor}
+                        onChange={(e) =>
+                          handleProjectChange(
+                            index,
+                            "supervisor",
+                            e.target.value
+                          )
+                        }
+                      />
                     </TableCell>
                     <TableCell>
-                      <TextField fullWidth placeholder="Co-Supervisor Name" />
+                      <TextField
+                        fullWidth
+                        placeholder="Co-Supervisor Name"
+                        value={value.coSupervisor}
+                        onChange={(e) =>
+                          handleProjectChange(
+                            index,
+                            "coSupervisor",
+                            e.target.value
+                          )
+                        }
+                      />
                     </TableCell>
                     <TableCell>
-                      <Select fullWidth defaultValue="">
-                        <MenuItem value="yes">Yes</MenuItem>
-                        <MenuItem value="no">No</MenuItem>
+                      <Select
+                        fullWidth
+                        defaultValue=""
+                        value={value.sdg}
+                        onChange={(e) =>
+                          handleProjectChange(
+                            index,
+                            "sdgConnection",
+                            e.target.value
+                          )
+                        }
+                      >
+                        <MenuItem value="Yes">Yes</MenuItem>
+                        <MenuItem value="Yes">No</MenuItem>
                       </Select>
                     </TableCell>
                     <TableCell>
-                      <Button variant="contained" component="label" sx={{ bgcolor: "#4caf50", color: "white", "&:hover": { bgcolor: "#388e3c" } }}>
+                      <Button
+                        variant="contained"
+                        component="label"
+                        sx={{
+                          bgcolor: "#4caf50",
+                          color: "white",
+                          "&:hover": { bgcolor: "#388e3c" },
+                        }}
+                      >
                         <CloudUpload sx={{ mr: 1 }} /> Upload
                         <input type="file" hidden />
                       </Button>
@@ -354,9 +596,14 @@ export default function AcademicInfoForm({ onChange, formData, handleChange }) {
             </Table>
           </TableContainer>
         )}
-        <Button variant="contained" onClick={addProject} sx={{ mt: 2, backgroundColor: "#388e3c" }} >Add Project</Button>
+        <Button
+          variant="contained"
+          onClick={addProject}
+          sx={{ mt: 2, backgroundColor: "#388e3c" }}
+        >
+          Add Project
+        </Button>
       </Box>
-
     </Box>
   );
 }
