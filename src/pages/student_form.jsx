@@ -173,7 +173,7 @@ export default function MultiStepForm({ onChange }) {
     },
   });
 
-  //state to control extra-curricular and co-curricular form details
+  //* state to control extra-curricular and co-curricular form details
   const [curricularformData, setCurricularFormData] = useState({
     clubs: [
       {
@@ -193,14 +193,14 @@ export default function MultiStepForm({ onChange }) {
         role: "",
         teammates: "",
         outcome: "",
-        certificate: "",
+        certificate: null,
       },
     ],
     leadership: [
       {
         role: "",
         details: "",
-        certificate: "",
+        certificate: null,
       },
     ],
     sports: [
@@ -303,6 +303,7 @@ export default function MultiStepForm({ onChange }) {
   //? function to handle the change in the placement form
   const handleCurricularChange = (event) => {
     const { name, value } = event.target;
+
     setCurricularFormData({
       ...curricularformData,
       [name]: value,
@@ -394,7 +395,7 @@ export default function MultiStepForm({ onChange }) {
       component: (
         <CoCurricularForm
           formData={curricularformData}
-          handleChangeCur={handleCurricularChange}
+          handleChange={handleCurricularChange}
         />
       ),
     },
