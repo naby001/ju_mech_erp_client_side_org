@@ -244,10 +244,10 @@ export default function MultiStepForm({ onChange }) {
 
   //* state to control misc form details
   const [miscformData, setMiscFormData] = useState({
-    lor: "",
+    lor: null,
     keyLearnings: "",
     sop: "",
-    vision: null,
+    vision: "",
   });
 
   //& function to handle h=changes in multi form state values
@@ -322,6 +322,20 @@ export default function MultiStepForm({ onChange }) {
       [name]: value,
     });
   };
+
+  //& function to handle the submit of the form
+  const handleSubmit = () => {
+    const allFormData = {
+      personalformData,
+      enrollformData,
+      acadbackformData,
+      acedamicformData,
+      placementformData,
+      curricularformData,
+      miscformData,
+    }
+    console.log(allFormData)
+  }
 
   //^ For debugging purpose (checking form details in console)
   const logStateValues = (activeComponent) => {
@@ -493,24 +507,43 @@ export default function MultiStepForm({ onChange }) {
             justifyContent: "center",
           }}
         >
-          <Button
-            variant="contained"
-            sx={{
-              mt: 3,
-              borderRadius: "10px",
-              background: "#b70924",
-              color: "#fff",
-              "&:hover": { background: "#90071d" },
-              width: "20%",
-            }}
-            onClick={() =>
-              setActiveSection((prev) =>
-                prev < sections.length - 1 ? prev + 1 : prev
-              )
-            }
-          >
-            Next
-          </Button>
+          {activeSection < sections.length - 1 ? (
+            // Render "Next" button for all sections except the last one
+            <Button
+              variant="contained"
+              sx={{
+                mt: 3,
+                borderRadius: "10px",
+                background: "#b70924",
+                color: "#fff",
+                "&:hover": { background: "#90071d" },
+                width: "20%",
+              }}
+              onClick={() =>
+                setActiveSection((prev) =>
+                  prev < sections.length - 1 ? prev + 1 : prev
+                )
+              }
+            >
+              Next
+            </Button>
+          ) : (
+            // Render "Submit" button on the last section
+            <Button
+              variant="contained"
+              sx={{
+                mt: 3,
+                borderRadius: "10px",
+                background: "#388e3c",
+                color: "#fff",
+                "&:hover": { background: "#2e7d32" },
+                width: "20%",
+              }}
+              onClick={() => handleSubmit()}
+            >
+              Submit
+            </Button>
+          )}
           <Button
             variant="outlined"
             sx={{

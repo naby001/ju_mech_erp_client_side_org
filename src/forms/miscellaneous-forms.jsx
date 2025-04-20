@@ -18,7 +18,7 @@ export default function MiscellaneousForm({ formData, handleChange }) {
       formData.sop,
       formData.vision,
     ];
-    console.log(dataArray); // Replace with desired export logic
+    console.log(dataArray);
   };
 
   return (
@@ -104,20 +104,6 @@ export default function MiscellaneousForm({ formData, handleChange }) {
         value={formData.vision}
         onChange={(e) => handleChange({ target: { name: "vision", value: e.target.value } })}
       />
-
-      {/* Submit Button */}
-      <Button
-        variant="contained"
-        sx={{
-          mt: 2,
-          borderRadius: "10px",
-          background: "#b70924",
-          "&:hover": { background: "#90071d" },
-          width: isMobile ? "100%" : "auto",
-        }}
-      >
-        Submit
-      </Button>
 
       {/* Export Data Button */}
       <Button
