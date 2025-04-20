@@ -1,12 +1,22 @@
 "use client";
-
 import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Box, Button, Avatar, Menu, MenuItem } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { setLogout } from "../state";
 
 export default function Navbar() {
-  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const token = document.cookie.split("; ").find((row) => row.startsWith("token="));
+  const user = token ? JSON.parse(atob(token.split("=")[1].split(".")[1])) : null;
+
+  //? function to handle logout
+  const handleLogout = () => {
+    document.cookie = "token=; path=/; max-age=0; secure; SameSite=Strict";
+    dispatch(setLogout());
+    navigate("/");
+  }
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
@@ -16,7 +26,7 @@ export default function Navbar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   return (
     <AppBar position="fixed" sx={{ bgcolor: "#b70924" }}>
@@ -32,27 +42,24 @@ export default function Navbar() {
             Home
           </Button>
           <Button color="inherit" component={Link} to="/about">
-            About
+            Notices
           </Button>
           <Button color="inherit" component={Link} to="/facilities">
-            Facilities
-          </Button>
-          <Button color="inherit" component={Link} to="/faculty">
             Faculty
           </Button>
+          <Button color="inherit" component={Link} to="/faculty">
+            Events
+          </Button>
           <Button color="inherit" component={Link} to="/contact">
-            Contact
+            Routines
           </Button>
         </Box>
 
         {/* Right: User Full Name and Avatar */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <Typography sx={{ fontWeight: "bold", fontSize: "15px", cursor:'pointer'}} onClick={()=>{navigate('/dashboard')}}>
-            Go To My Dashboard
-          </Typography>
-          <Avatar 
-            src={user?.avatar || "/default-avatar.png"} 
-            alt={user?.fullName} 
+          <Avatar
+            src={user?.avatar || "/default-avatar.png"}
+            alt={user?.name}
             sx={{ width: 40, height: 40, cursor: "pointer" }}
             onClick={handleMenuOpen}
           />
@@ -60,13 +67,28 @@ export default function Navbar() {
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
+            disableAutoFocusItem
           >
-            <MenuItem component={Link} to="/auth" onClick={handleMenuClose}>
-              Login
-            </MenuItem>
-            <MenuItem component={Link} to="/admin-login" onClick={handleMenuClose}>
-              Administrative Login
-            </MenuItem>
+            {user ? (
+              [
+                <MenuItem key="user - name" component={Link} to="/auth" onClick={handleMenuClose}>
+                  {user.name}
+                </MenuItem>,
+                <MenuItem key="logout" component={Link} onClick={handleLogout}>
+                  Logout
+                </MenuItem>,
+              ]
+            ) : (
+              [
+                <MenuItem key="user-login" component={Link} to="/auth" onClick={handleMenuClose}>
+                  Login
+                </MenuItem>,
+                <MenuItem key="administer-login" component={Link} to="/admin-login" onClick={handleMenuClose}>
+                  Administrative Login
+                </MenuItem>
+              ]
+            )}
+
           </Menu>
         </Box>
       </Toolbar>
