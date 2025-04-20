@@ -100,7 +100,7 @@ export default function MultiStepForm({ onChange }) {
         institute: "",
         sdgConnection: false,
         outcome: "",
-        certificates: [],
+        certificate: [],
       },
     ],
     publications: {
@@ -129,10 +129,46 @@ export default function MultiStepForm({ onChange }) {
           details: "",
           applno: "",
           patno: "",
-          patcert: "",
+          certificate: "",
         },
       ],
     },
+    courses: [
+      {
+        name: "",
+        duration: "",
+        mode: "",
+        noCredits: "",
+        platform: "",
+        instituteName: "",
+        facultyName: "",
+        curriculumPart: "",
+        creditTransfer: "",
+        gradeCard: "",
+        certificate: null,
+      }
+    ],
+    trainings: [{
+      place: "",
+      duration: 0,
+      mode: "",
+      noCredits: "",
+      organizedBy: "",
+      certificate: null,
+    }],
+    interns: [{
+      place: "",
+      duration: "",
+      mode: "",
+      noCredits: "",
+      platfom: "",
+      organizedBy: "",
+      certificate: null,
+    }],
+    remedial: [{
+      num: 0,
+      name: "",
+    }],
   });
 
   //* state to control placement details at the university
