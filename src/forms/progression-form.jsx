@@ -1,7 +1,6 @@
+//? importing necesarry modules
 "use client";
-
 import React from "react";
-
 import { useState } from "react";
 import {
   TextField,
@@ -23,7 +22,7 @@ import {
 import { Add, Delete } from "@mui/icons-material";
 import FileUploadField from "../pages/file-upload-field";
 
-// Props: TabPanel expects children (ReactNode), index (number), and value (number)
+//* Props: TabPanel expects children (ReactNode), index (number), and value (number)
 function TabPanel({ children, value, index, ...other }) {
   return (
     <div
@@ -38,40 +37,14 @@ function TabPanel({ children, value, index, ...other }) {
   );
 }
 
-// Props: onChange is a function that receives progression data
-export default function ProgressionForm({ onChange }) {
+//* Props: onChange is a function that receives progression data
+export default function ProgressionForm({ formData, handleChange }) {
   const [tabValue, setTabValue] = useState(0);
-  const [placement, setPlacement] = useState({
-    isPlaced: false,
-    offers: [
-      {
-        company: "",
-        position: "",
-        employmentType: "",
-        recruitmentType: "",
-        year: "",
-        package: "",
-        offerLetter: null,
-      },
-    ],
-    choiceDetails: "",
-  });
-  const [exams, setExams] = useState([
-    {
-      name: "",
-      year: "",
-      score: "",
-      hasTraining: false,
-      trainingType: "",
-      trainingMode: "",
-      resultCard: null,
-    },
-  ]);
-  const [higherStudy, setHigherStudy] = useState({
-    programme: "",
-    duration: "",
-    institute: "",
-    country: "",
+  const [ifPlaced, setIfPlaced] = useState(false);
+  const [hasTraining, setHasTraining] = useState(false);
+  const [startupOptions, setStartupOptions] = useState({
+    associated:false,
+    interested:false,
   });
   const [startup, setStartup] = useState({
     hasStartup: false,
@@ -81,31 +54,84 @@ export default function ProgressionForm({ onChange }) {
     externalSupport: "",
   });
 
+  //& functions to handle changes in the form
+  //? function to handle the tab change
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
 
-  // Placement handlers
-  const handlePlacementChange = (field, value) => {
-    const newPlacement = { ...placement, [field]: value };
-    setPlacement(newPlacement);
+  //? function to handle whether placed or not
+  const handleIsPlaced = (field) => {
+    setIfPlaced(field);
+  };
 
-    onChange({
-      progression: {
-        placement: newPlacement,
-        exams,
-        higherStudy,
-        startup,
-      },
+  //? function to handle offer change
+  const handleOfferChange = (index, field, value) => {
+    const updatedOffer = formData.placements.map((placement, i) =>
+      i === index ? { ...placement, [field]: value } : placement
+    );
+    handleChange({ target: { name: "placements", value: updatedOffer } });
+  };
+
+  //? function to handle if student has training for exam
+  const handleHasTraining = (field) => {
+    setHasTraining(field);
+    return;
+  };
+
+  //? function to handle exam change
+  const handleExamChange = (index, field, value) => {
+    const updatedExam = formData.competitiveExam.map((exam, i) =>
+      i === index ? { ...exam, [field]: value } : exam
+    );
+    handleChange({ target: { name: "competitiveExam", value: updatedExam } });
+  };
+
+  //? function to handle higher study change
+  const handleHigherStudyChange = (field, value) => {
+    const updatedHigherStudy = {
+      ...formData.higherStudy,
+      [field]: value,
+    };
+    handleChange({
+      target: { name: "higherStudy", value: updatedHigherStudy },
     });
   };
 
+  //? function to handle startup options
+  const handleStartupOptionsChange = (field, option) => {
+    if(option==="associated"){
+      setStartupOptions((prevState) => ({
+        ...prevState,
+        associated: field,
+      }));
+    }else{
+      setStartupOptions((prevState) => ({
+        ...prevState,
+        interested: field,
+      }));
+    }
+  }
+
+  //? funtion to handle startup change
+  const handleStartupChange = (field, value) => {
+    const updatedStartUp = {
+      ... formData.startup,
+      [field]: value,
+    }
+    handleChange({
+      target: { name: "startup", value: updatedStartUp },
+    });
+  };
+
+  //& functions to add sections in progression form
+  //? function to ass new placement offer
   const addOffer = () => {
     const newOffers = [
-      ...placement.offers,
+      ...formData.placements,
       {
         company: "",
-        position: "",
+        posititon: "",
         employmentType: "",
         recruitmentType: "",
         year: "",
@@ -113,136 +139,55 @@ export default function ProgressionForm({ onChange }) {
         offerLetter: null,
       },
     ];
-    const newPlacement = { ...placement, offers: newOffers };
-    setPlacement(newPlacement);
-
-    onChange({
-      progression: {
-        placement: newPlacement,
-        exams,
-        higherStudy,
-        startup,
-      },
-    });
+    handleChange({ target: { name: "placements", value: newOffers } });
   };
 
-  const removeOffer = (index) => {
-    const newOffers = [...placement.offers];
-    newOffers.splice(index, 1);
-    const newPlacement = { ...placement, offers: newOffers };
-    setPlacement(newPlacement);
-
-    onChange({
-      progression: {
-        placement: newPlacement,
-        exams,
-        higherStudy,
-        startup,
-      },
-    });
-  };
-
-  const handleOfferChange = (index, field, value) => {
-    const newOffers = [...placement.offers];
-    newOffers[index] = { ...newOffers[index], [field]: value };
-    const newPlacement = { ...placement, offers: newOffers };
-    setPlacement(newPlacement);
-
-    onChange({
-      progression: {
-        placement: newPlacement,
-        exams,
-        higherStudy,
-        startup,
-      },
-    });
-  };
-
-  // Exams handlers
+  //? function to add section in exams
   const addExam = () => {
-    setExams([
-      ...exams,
+    const newExam = [
+      ...formData.competitiveExam,
       {
-        name: "",
+        examinationName: "",
         year: "",
         score: "",
-        hasTraining: false,
+        rank: "",
+        percentile: "",
         trainingType: "",
         trainingMode: "",
-        resultCard: null,
+        rankCard: null,
       },
-    ]);
+    ];
+    handleChange({ target: { name: "competitiveExam", value: newExam } });
   };
 
+  //& functions to remove sections in progression form
+  //? function to remove placement offer
+  const removeOffer = (index) => {
+    const modifiedOffer = formData.placements.filter((_, i) => i != index);
+    handleChange({ target: { name: "placements", value: modifiedOffer } });
+  };
+
+  //? function to remove section from exams
   const removeExam = (index) => {
-    const newExams = [...exams];
-    newExams.splice(index, 1);
-    setExams(newExams);
-
-    onChange({
-      progression: {
-        placement,
-        exams: newExams,
-        higherStudy,
-        startup,
-      },
-    });
-  };
-
-  const handleExamChange = (index, field, value) => {
-    const newExams = [...exams];
-    newExams[index] = { ...newExams[index], [field]: value };
-    setExams(newExams);
-
-    onChange({
-      progression: {
-        placement,
-        exams: newExams,
-        higherStudy,
-        startup,
-      },
-    });
-  };
-
-  // Higher Study handlers
-  const handleHigherStudyChange = (field, value) => {
-    const newHigherStudy = { ...higherStudy, [field]: value };
-    setHigherStudy(newHigherStudy);
-
-    onChange({
-      progression: {
-        placement,
-        exams,
-        higherStudy: newHigherStudy,
-        startup,
-      },
-    });
-  };
-
-  // Startup handlers
-  const handleStartupChange = (field, value) => {
-    const newStartup = { ...startup, [field]: value };
-    setStartup(newStartup);
-
-    onChange({
-      progression: {
-        placement,
-        exams,
-        higherStudy,
-        startup: newStartup,
-      },
-    });
+    const modifiedExam = formData.competitiveExam.filter((_, i) => i != index);
+    handleChange({ target: { name: "competitiveExam", value: modifiedExam } });
   };
 
   return (
     <Box>
+      {/* heading */}
       <Typography variant="h5" gutterBottom>
         Progression/Placement/Competitive Examinations
       </Typography>
       <Divider className="mb-4" />
 
+      {/* tab panel */}
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={tabValue} onChange={handleTabChange} aria-label="progression tabs">
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          aria-label="progression tabs"
+        >
           <Tab label="Placement" />
           <Tab label="Competitive Exams" />
           <Tab label="Higher Study" />
@@ -250,6 +195,7 @@ export default function ProgressionForm({ onChange }) {
         </Tabs>
       </Box>
 
+      {/* tab panel content */}
       <TabPanel value={tabValue} index={0}>
         <Typography variant="h6" gutterBottom>
           Placement Details
@@ -260,8 +206,8 @@ export default function ProgressionForm({ onChange }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={placement.isPlaced}
-                  onChange={(e) => handlePlacementChange("isPlaced", e.target.checked)}
+                  checked={ifPlaced}
+                  onChange={(e) => handleIsPlaced(e.target.checked)}
                 />
               }
               label="Whether Placed"
@@ -269,17 +215,20 @@ export default function ProgressionForm({ onChange }) {
           </Grid>
         </Grid>
 
-        {placement.isPlaced && (
+        {ifPlaced && (
           <>
-            {placement.offers.map((offer, index) => (
-              <Paper key={index} className="p-4 mb-4" sx={{mb:4}}>
+            {formData.placements.map((placement, index) => (
+              <Paper key={index} className="p-4 mb-4" sx={{ mb: 4 }}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>
                     <TextField
                       fullWidth
                       label="Company Name"
-                      value={offer.company}
-                      onChange={(e) => handleOfferChange(index, "company", e.target.value)}
+                      value={placement.company}
+                      type="text"
+                      onChange={(e) =>
+                        handleOfferChange(index, "company", e.target.value)
+                      }
                     />
                   </Grid>
 
@@ -287,8 +236,10 @@ export default function ProgressionForm({ onChange }) {
                     <TextField
                       fullWidth
                       label="Position Offered"
-                      value={offer.position}
-                      onChange={(e) => handleOfferChange(index, "position", e.target.value)}
+                      value={placement.position}
+                      onChange={(e) =>
+                        handleOfferChange(index, "position", e.target.value)
+                      }
                     />
                   </Grid>
 
@@ -296,8 +247,14 @@ export default function ProgressionForm({ onChange }) {
                     <FormControl fullWidth>
                       <InputLabel>Employment Type</InputLabel>
                       <Select
-                        value={offer.employmentType}
-                        onChange={(e) => handleOfferChange(index, "employmentType", e.target.value)}
+                        value={placement.employmentType}
+                        onChange={(e) =>
+                          handleOfferChange(
+                            index,
+                            "employmentType",
+                            e.target.value
+                          )
+                        }
                         label="Employment Type"
                       >
                         <MenuItem value="contractual">Contractual</MenuItem>
@@ -310,8 +267,14 @@ export default function ProgressionForm({ onChange }) {
                     <FormControl fullWidth>
                       <InputLabel>Recruitment Type</InputLabel>
                       <Select
-                        value={offer.recruitmentType}
-                        onChange={(e) => handleOfferChange(index, "recruitmentType", e.target.value)}
+                        value={placement.recruitmentType}
+                        onChange={(e) =>
+                          handleOfferChange(
+                            index,
+                            "recruitmentType",
+                            e.target.value
+                          )
+                        }
                         label="Recruitment Type"
                       >
                         <MenuItem value="inCampus">In-Campus</MenuItem>
@@ -324,8 +287,10 @@ export default function ProgressionForm({ onChange }) {
                     <TextField
                       fullWidth
                       label="Year of Offer"
-                      value={offer.year}
-                      onChange={(e) => handleOfferChange(index, "year", e.target.value)}
+                      value={placement.year}
+                      onChange={(e) =>
+                        handleOfferChange(index, "year", e.target.value)
+                      }
                       type="number"
                     />
                   </Grid>
@@ -334,8 +299,10 @@ export default function ProgressionForm({ onChange }) {
                     <TextField
                       fullWidth
                       label="Package (LPA)"
-                      value={offer.package}
-                      onChange={(e) => handleOfferChange(index, "package", e.target.value)}
+                      value={placement.package}
+                      onChange={(e) =>
+                        handleOfferChange(index, "package", e.target.value)
+                      }
                       type="number"
                       inputProps={{ step: 0.01 }}
                     />
@@ -344,7 +311,9 @@ export default function ProgressionForm({ onChange }) {
                   <Grid item xs={12}>
                     <FileUploadField
                       label="Upload Offer Letter (if any)"
-                      onChange={(files) => handleOfferChange(index, "offerLetter", files[0])}
+                      onChange={(files) =>
+                        handleOfferChange(index, "offerLetter", files[0])
+                      }
                     />
                   </Grid>
 
@@ -354,7 +323,7 @@ export default function ProgressionForm({ onChange }) {
                       color="error"
                       startIcon={<Delete />}
                       onClick={() => removeOffer(index)}
-                      disabled={placement.offers.length === 1}
+                      disabled={formData.placements.length === 1}
                     >
                       Remove Offer
                     </Button>
@@ -363,11 +332,16 @@ export default function ProgressionForm({ onChange }) {
               </Paper>
             ))}
 
-            <Button variant="contained" startIcon={<Add />} onClick={addOffer} className="mb-4">
+            <Button
+              variant="contained"
+              startIcon={<Add />}
+              onClick={addOffer}
+              className="mb-4"
+            >
               Add Offer
             </Button>
 
-            {placement.offers.length > 1 && (
+            {/* {placement.offers.length > 1 && (
               <Grid container spacing={3} className="mt-2">
                 <Grid item xs={12}>
                   <TextField
@@ -380,25 +354,28 @@ export default function ProgressionForm({ onChange }) {
                   />
                 </Grid>
               </Grid>
-            )}
+            )} */}
           </>
         )}
       </TabPanel>
 
+      {/* Comptitive Exams */}
       <TabPanel value={tabValue} index={1}>
         <Typography variant="h6" gutterBottom>
           Competitive Examinations
         </Typography>
 
-        {exams.map((exam, index) => (
-          <Paper key={index} className="p-4 mb-4" sx={{mb:4}}>
+        {formData.competitiveExam.map((exam, index) => (
+          <Paper key={index} className="p-4 mb-4" sx={{ mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
                   label="Examination Name"
-                  value={exam.name}
-                  onChange={(e) => handleExamChange(index, "name", e.target.value)}
+                  value={exam.examinationName}
+                  onChange={(e) =>
+                    handleExamChange(index, "examinationName", e.target.value)
+                  }
                 />
               </Grid>
 
@@ -407,7 +384,9 @@ export default function ProgressionForm({ onChange }) {
                   fullWidth
                   label="Year"
                   value={exam.year}
-                  onChange={(e) => handleExamChange(index, "year", e.target.value)}
+                  onChange={(e) =>
+                    handleExamChange(index, "year", e.target.value)
+                  }
                   type="number"
                 />
               </Grid>
@@ -415,9 +394,36 @@ export default function ProgressionForm({ onChange }) {
               <Grid item xs={12} md={3}>
                 <TextField
                   fullWidth
-                  label="Score/Rank/Percentile"
+                  label="Score"
                   value={exam.score}
-                  onChange={(e) => handleExamChange(index, "score", e.target.value)}
+                  onChange={(e) =>
+                    handleExamChange(index, "score", e.target.value)
+                  }
+                  type="number"
+                />
+              </Grid>
+
+              <Grid item xs={12} md={3}>
+                <TextField
+                  fullWidth
+                  label="Rank"
+                  value={exam.rank}
+                  onChange={(e) =>
+                    handleExamChange(index, "rank", e.target.value)
+                  }
+                  type="number"
+                />
+              </Grid>
+
+              <Grid item xs={12} md={3}>
+                <TextField
+                  fullWidth
+                  label="Percentile"
+                  value={exam.percentile}
+                  onChange={(e) =>
+                    handleExamChange(index, "percentile", e.target.value)
+                  }
+                  type="number"
                 />
               </Grid>
 
@@ -425,40 +431,54 @@ export default function ProgressionForm({ onChange }) {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={exam.hasTraining}
-                      onChange={(e) => handleExamChange(index, "hasTraining", e.target.checked)}
+                      checked={hasTraining}
+                      onChange={(e) => handleHasTraining(e.target.checked)}
                     />
                   }
                   label="Specific training/Guidance for the examination"
                 />
               </Grid>
 
-              {exam.hasTraining && (
+              {hasTraining && (
                 <>
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
                       <InputLabel>Training Type</InputLabel>
                       <Select
-                        value={exam.trainingType}
-                        onChange={(e) => handleExamChange(index, "trainingType", e.target.value)}
+                        value={exam.trainingMode}
+                        onChange={(e) =>
+                          handleExamChange(
+                            index,
+                            "trainingMode",
+                            e.target.value
+                          )
+                        }
                         label="Training Type"
                       >
-                        <MenuItem value="inHouse">In-house</MenuItem>
-                        <MenuItem value="outside">Outside/Online</MenuItem>
+                        <MenuItem value="In-House">In-house</MenuItem>
+                        <MenuItem value="Outside/Online">
+                          Outside/Online
+                        </MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
 
                   <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
-                      <InputLabel>Training Mode</InputLabel>
+                      <InputLabel>Training Type</InputLabel>
                       <Select
-                        value={exam.trainingMode}
-                        onChange={(e) => handleExamChange(index, "trainingMode", e.target.value)}
-                        label="Training Mode"
+                        value={exam.trainingType}
+                        onChange={(e) =>
+                          handleExamChange(
+                            index,
+                            "trainingType",
+                            e.target.value
+                          )
+                        }
+                        label="Training Type"
                       >
-                        <MenuItem value="paid">Payment basis</MenuItem>
-                        <MenuItem value="unpaid">Unpaid (from tutorials/resources)</MenuItem>
+                        <MenuItem value="Paid">Paid</MenuItem>
+                        <MenuItem value="Unpaid">Unpaid</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -468,7 +488,9 @@ export default function ProgressionForm({ onChange }) {
               <Grid item xs={12}>
                 <FileUploadField
                   label="Upload Rank Card/Result (if any)"
-                  onChange={(files) => handleExamChange(index, "resultCard", files[0])}
+                  onChange={(files) =>
+                    handleExamChange(index, "resultCard", files[0])
+                  }
                 />
               </Grid>
 
@@ -478,7 +500,7 @@ export default function ProgressionForm({ onChange }) {
                   color="error"
                   startIcon={<Delete />}
                   onClick={() => removeExam(index)}
-                  disabled={exams.length === 1}
+                  disabled={formData.competitiveExam.length === 1}
                 >
                   Remove Exam
                 </Button>
@@ -487,11 +509,17 @@ export default function ProgressionForm({ onChange }) {
           </Paper>
         ))}
 
-        <Button variant="contained" startIcon={<Add />} onClick={addExam} className="mb-4">
+        <Button
+          variant="contained"
+          startIcon={<Add />}
+          onClick={addExam}
+          className="mb-4"
+        >
           Add Exam
         </Button>
       </TabPanel>
 
+      {/* Higher Study */}
       <TabPanel value={tabValue} index={2}>
         <Typography variant="h6" gutterBottom>
           Higher Study
@@ -502,8 +530,10 @@ export default function ProgressionForm({ onChange }) {
             <FormControl fullWidth>
               <InputLabel>Programme</InputLabel>
               <Select
-                value={higherStudy.programme}
-                onChange={(e) => handleHigherStudyChange("programme", e.target.value)}
+                value={formData.higherStudy.programme}
+                onChange={(e) =>
+                  handleHigherStudyChange("programme", e.target.value)
+                }
                 label="Programme"
               >
                 <MenuItem value="mtech">M.Tech</MenuItem>
@@ -518,9 +548,11 @@ export default function ProgressionForm({ onChange }) {
           <Grid item xs={12} md={6}>
             <TextField
               fullWidth
-              label="Tenure/duration of the programme"
-              value={higherStudy.duration}
-              onChange={(e) => handleHigherStudyChange("duration", e.target.value)}
+              label="Tenure(in yrs)"
+              value={formData.higherStudy.duration}
+              onChange={(e) =>
+                handleHigherStudyChange("duration", e.target.value)
+              }
             />
           </Grid>
 
@@ -528,8 +560,10 @@ export default function ProgressionForm({ onChange }) {
             <TextField
               fullWidth
               label="Institute/University"
-              value={higherStudy.institute}
-              onChange={(e) => handleHigherStudyChange("institute", e.target.value)}
+              value={formData.higherStudy.institute}
+              onChange={(e) =>
+                handleHigherStudyChange("institute", e.target.value)
+              }
             />
           </Grid>
 
@@ -537,13 +571,16 @@ export default function ProgressionForm({ onChange }) {
             <TextField
               fullWidth
               label="Country"
-              value={higherStudy.country}
-              onChange={(e) => handleHigherStudyChange("country", e.target.value)}
+              value={formData.higherStudy.country}
+              onChange={(e) =>
+                handleHigherStudyChange("country", e.target.value)
+              }
             />
           </Grid>
         </Grid>
       </TabPanel>
 
+      {/* Startups */}
       <TabPanel value={tabValue} index={3}>
         <Typography variant="h6" gutterBottom>
           Startups/Entrepreneurship Initiatives
@@ -554,21 +591,25 @@ export default function ProgressionForm({ onChange }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={startup.hasStartup}
-                  onChange={(e) => handleStartupChange("hasStartup", e.target.checked)}
+                  checked={startupOptions.associated}
+                  onChange={(e) =>
+                    handleStartupOptionsChange(e.target.checked,"associated")
+                  }
                 />
               }
               label="Associated with/developed any startups/entrepreneurship initiative"
             />
           </Grid>
 
-          {startup.hasStartup && (
+          {startupOptions.associated && (
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Details of the startup/entrepreneurship initiative: Name, objective, investment etc."
-                value={startup.startupDetails}
-                onChange={(e) => handleStartupChange("startupDetails", e.target.value)}
+                value={formData.startup.details}
+                onChange={(e) =>
+                  handleStartupChange("details", e.target.value)
+                }
                 multiline
                 rows={3}
               />
@@ -579,22 +620,26 @@ export default function ProgressionForm({ onChange }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={startup.interestedInStartup}
-                  onChange={(e) => handleStartupChange("interestedInStartup", e.target.checked)}
+                  checked={startupOptions.interested}
+                  onChange={(e) =>
+                    handleStartupOptionsChange(e.target.checked, "interested")
+                  }
                 />
               }
               label="Whether interested to form startups/entrepreneurship initiative in future"
             />
           </Grid>
 
-          {startup.interestedInStartup && (
+          {startupOptions.interested && (
             <>
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
                   label="Is there any support from the University"
-                  value={startup.universitySupport}
-                  onChange={(e) => handleStartupChange("universitySupport", e.target.value)}
+                  value={formData.startup.support}
+                  onChange={(e) =>
+                    handleStartupChange("support", e.target.value)
+                  }
                   multiline
                   rows={2}
                 />
@@ -604,8 +649,10 @@ export default function ProgressionForm({ onChange }) {
                 <TextField
                   fullWidth
                   label="Is there any external support"
-                  value={startup.externalSupport}
-                  onChange={(e) => handleStartupChange("externalSupport", e.target.value)}
+                  value={formData.startup.externalSupport}
+                  onChange={(e) =>
+                    handleStartupChange("externalSupport", e.target.value)
+                  }
                   multiline
                   rows={2}
                 />
@@ -617,4 +664,3 @@ export default function ProgressionForm({ onChange }) {
     </Box>
   );
 }
-

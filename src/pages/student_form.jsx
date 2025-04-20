@@ -7,6 +7,7 @@ import {
   Drawer,
   IconButton,
 } from "@mui/material";
+//? importing multiform components
 import PersonalInfoForm from "../forms/personal-info-form"; // form component for hanlding the personal info
 import EnrollmentDetailsForm from "../forms/enrollment-details-forms"; // form component for handling the enrollment details
 import AcademicBackgroundForm from "../forms/academic-background-form"; // form component for hanlding the acedamic component details
@@ -14,7 +15,7 @@ import AcademicInfoForm from "../forms/academic-info-form"; // form component fo
 import ProgressionForm from "../forms/progression-form"; // form component for handling the placement details of the student
 import CoCurricularForm from "../forms/co-curricular-form"; // form component for handling the co-curricular and extra-curricular activities
 import MiscellaneousForms from "../forms/miscellaneous-forms"; // form component for handling the miscellenous details of the student
-// importing components
+//? importing components
 import Sidebar from "../components/Sidebar"; // sidebar component
 
 export default function MultiStepForm({ onChange }) {
@@ -22,7 +23,7 @@ export default function MultiStepForm({ onChange }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:900px)"); // responsive state property
 
-  //~ state object to store personal details/general info of student
+  //* state object to store personal details/general info of student
   const [personalformData, setPersonalFormData] = useState({
     name: "",
     dob: "",
@@ -46,7 +47,7 @@ export default function MultiStepForm({ onChange }) {
     familyIncome: "",
   });
 
-  //~ State to control enrollment details of the student resistered in JU
+  //* State to control enrollment details of the student resistered in JU
   const [enrollformData, setEnrollFormData] = useState({
     rollNumber: "",
     section: "",
@@ -63,7 +64,7 @@ export default function MultiStepForm({ onChange }) {
     scholarshipDetails: "",
   });
 
-  //~ state to control school acedamic background details
+  //* state to control school acedamic background details
   const [acadbackformData, setAcadBackFormData] = useState({
     secondaryMarks: "",
     secondaryYear: "",
@@ -75,7 +76,7 @@ export default function MultiStepForm({ onChange }) {
     entranceExamYear: "",
   });
 
-  //~ state to control acedamic details at the university
+  //* state to control acedamic details at the university
   const [acedamicformData, setAcedamicFormData] = useState({
     grades: [
       {
@@ -134,8 +135,43 @@ export default function MultiStepForm({ onChange }) {
     },
   });
 
-  //state to control placement details at the university
-  const [placemenformtData, setPlacementFormData] = useState({});
+  //* state to control placement details at the university
+  const [placementformData, setPlacementFormData] = useState({
+    placements: [
+      {
+        company: "",
+        position: "",
+        employmentType: "",
+        recruitmentType: "",
+        year: "",
+        package: "",
+        offerLetter: null,
+      },
+    ],
+    competitiveExam: [
+      {
+        examinationName: "",
+        year: "",
+        score: "",
+        rank: "",
+        percentile: "",
+        trainingType: "",
+        trainingMode: "",
+        rankCard: null,
+      },
+    ],
+    higherStudy: {
+      programme: "",
+      duration: "",
+      university: "",
+      country: "",
+    },
+    startup: {
+      details: "",
+      support: "",
+      externalSupport: "",
+    },
+  });
 
   //state to control extra-curricular and co-curricular form details
   const [curricularformData, setCurricularFormData] = useState({
@@ -208,9 +244,10 @@ export default function MultiStepForm({ onChange }) {
     ],
   });
 
-  //~ state to control misc form details
+  //* state to control misc form details
   const [miscformData, setMiscFormData] = useState({});
 
+  //& function to handle h=changes in multi form state values
   //? function to handle the change in the personal info form
   const handlepersonalChange = (event) => {
     const { name, value, checked, type } = event.target;
@@ -254,6 +291,16 @@ export default function MultiStepForm({ onChange }) {
   };
 
   //? function to handle the change in the placement form
+  const handlePlacementChange = (event) => {
+    const { name, value } = event.target;
+
+    setPlacementFormData({
+      ...placementformData,
+      [name]: value,
+    });
+  };
+
+  //? function to handle the change in the placement form
   const handleCurricularChange = (event) => {
     const { name, value } = event.target;
     setCurricularFormData({
@@ -279,7 +326,7 @@ export default function MultiStepForm({ onChange }) {
         console.log("Academic Info:", acedamicformData);
         break;
       case "Placement":
-        console.log("Placement Details:", placemenformtData);
+        console.log("Placement Details:", placementformData);
         break;
       case "Co-Curricular and Extra-Curricular Activities":
         console.log(
@@ -295,7 +342,7 @@ export default function MultiStepForm({ onChange }) {
     }
   };
 
-  //? array of dicts containing section titles and component tags
+  //& array of dicts containing section titles and component tags
   const sections = [
     {
       title: "General Info",
@@ -333,7 +380,15 @@ export default function MultiStepForm({ onChange }) {
         />
       ),
     },
-    { title: "Placement", component: <ProgressionForm /> },
+    {
+      title: "Placement",
+      component: (
+        <ProgressionForm
+          formData={placementformData}
+          handleChange={handlePlacementChange}
+        />
+      ),
+    },
     {
       title: "Co-Curricular and Extra-Curricular Activities",
       component: (
