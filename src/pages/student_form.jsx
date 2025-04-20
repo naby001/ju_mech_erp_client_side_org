@@ -233,19 +233,22 @@ export default function MultiStepForm({ onChange }) {
         certificate: null,
       },
     ],
-    seminars: [
-      {
-        name: "",
-        venue: "",
-        date: "",
-        organizer: "",
-        certificate: null,
-      },
-    ],
+    seminars: {
+      name: "",
+      venue: "",
+      date: "",
+      organizer: "",
+      certificate: null,
+    },
   });
 
   //* state to control misc form details
-  const [miscformData, setMiscFormData] = useState({});
+  const [miscformData, setMiscFormData] = useState({
+    lor: "",
+    keyLearnings: "",
+    sop: "",
+    vision: null,
+  });
 
   //& function to handle h=changes in multi form state values
   //? function to handle the change in the personal info form
@@ -300,12 +303,22 @@ export default function MultiStepForm({ onChange }) {
     });
   };
 
-  //? function to handle the change in the placement form
+  //? function to handle the change in the curriculum form
   const handleCurricularChange = (event) => {
     const { name, value } = event.target;
 
     setCurricularFormData({
       ...curricularformData,
+      [name]: value,
+    });
+  };
+
+  //? function to handle the change in the misc form
+  const handleMiscChange = (event) => {
+    const { name, value } = event.target;
+
+    setMiscFormData({
+      ...miscformData,
       [name]: value,
     });
   };
@@ -399,7 +412,15 @@ export default function MultiStepForm({ onChange }) {
         />
       ),
     },
-    { title: "Miscellaneous", component: <MiscellaneousForms /> },
+    {
+      title: "Miscellaneous",
+      component: (
+        <MiscellaneousForms
+          formData={miscformData}
+          handleChange={handleMiscChange}
+        />
+      ),
+    },
   ];
 
   return (

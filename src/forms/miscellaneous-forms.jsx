@@ -1,25 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Button, Container, TextField, Typography, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
 
-export default function MiscellaneousForm() {
+export default function MiscellaneousForm({ formData, handleChange }) {
   const isMobile = useMediaQuery("(max-width:900px)");
 
-  const [formData, setFormData] = useState({
-    lor: null,
-    keyLearnings: "",
-    sop: "",
-    vision: "",
-  });
-
-  const handleFileUpload = (event) => {
-    setFormData({ ...formData, lor: event.target.files[0] });
+  // Function to handle file uploads using handleChange
+  const handleFileUpload = (field, file) => {
+    handleChange({ target: { name: field, value: file } });
   };
 
-  const handleChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
-  };
-
+  // Function to export data as an array
   const exportDataAsArray = () => {
     const dataArray = [
       formData.lor,
@@ -70,7 +61,11 @@ export default function MiscellaneousForm() {
           }}
         >
           Upload LOR
-          <input type="file" hidden onChange={handleFileUpload} />
+          <input
+            type="file"
+            hidden
+            onChange={(e) => handleFileUpload("lor", e.target.files[0])}
+          />
         </Button>
       </Box>
 
@@ -83,7 +78,7 @@ export default function MiscellaneousForm() {
         fullWidth
         sx={{ mb: 3, borderRadius: "10px", background: "rgba(255, 255, 255, 0.1)" }}
         value={formData.keyLearnings}
-        onChange={(e) => handleChange("keyLearnings", e.target.value)}
+        onChange={(e) => handleChange({ target: { name: "keyLearnings", value: e.target.value } })}
       />
 
       {/* SOP */}
@@ -95,7 +90,7 @@ export default function MiscellaneousForm() {
         fullWidth
         sx={{ mb: 3, borderRadius: "10px", background: "rgba(255, 255, 255, 0.1)" }}
         value={formData.sop}
-        onChange={(e) => handleChange("sop", e.target.value)}
+        onChange={(e) => handleChange({ target: { name: "sop", value: e.target.value } })}
       />
 
       {/* Vision & Long-term Aspirations */}
@@ -107,7 +102,7 @@ export default function MiscellaneousForm() {
         fullWidth
         sx={{ mb: 3, borderRadius: "10px", background: "rgba(255, 255, 255, 0.1)" }}
         value={formData.vision}
-        onChange={(e) => handleChange("vision", e.target.value)}
+        onChange={(e) => handleChange({ target: { name: "vision", value: e.target.value } })}
       />
 
       {/* Submit Button */}
