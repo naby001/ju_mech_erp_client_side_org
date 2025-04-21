@@ -21,12 +21,19 @@ const WHITE = "#ffffff";
 
 const AuthPage = ({ fetchUserProfile }) => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ fullName: "", email: "", password: "" });
+  const [formData, setFormData] = useState({
+    fullName: "",
+    mobileNo: "",
+    email: "",
+    rollNumber: "",
+    password: "",
+  });
   const isMobile = useMediaQuery("(max-width:600px)");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //? function to handle change in form data
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -47,7 +54,9 @@ const AuthPage = ({ fetchUserProfile }) => {
       const returneddata = await response.json();
       if (response.ok) {
         document.cookie = `token=${returneddata.token}; path=/; max-age=86400; secure; SameSite=Strict`;
-        dispatch(setLogin({ user: returneddata.user, token: returneddata.token }));
+        dispatch(
+          setLogin({ user: returneddata.user, token: returneddata.token })
+        );
       }
       navigate("/");
       fetchUserProfile(returneddata.token); // Fetch user profile after login/signup
@@ -73,6 +82,7 @@ const AuthPage = ({ fetchUserProfile }) => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        overflow: "hidden",
       }}
       maxWidth={false}
     >
@@ -81,6 +91,7 @@ const AuthPage = ({ fetchUserProfile }) => {
         animate={{ opacity: 1, y: 0, transition: { duration: 0.8 } }}
         style={{
           height: isMobile ? "80%" : "20%",
+          overflowY: "auto",
         }}
       >
         <AnimatePresence mode="wait">
@@ -94,18 +105,23 @@ const AuthPage = ({ fetchUserProfile }) => {
             <Paper
               elevation={10}
               sx={{
-                padding: isMobile ? 3 : 5,
+                padding: isMobile ? 3 : 4,
                 borderRadius: 4,
                 textAlign: "center",
                 bgcolor: "white",
                 height: isMobile ? "70vh" : "auto",
                 minHeight: isMobile ? "70vh" : "500px",
                 width: isMobile ? "90vw" : "400px",
+                overflowY: "auto",
+                maxHeight: "90vh",
               }}
             >
               <img
                 src={JULogo}
-                style={{ width: !isMobile ? 300 : 200, height: !isMobile ? 60 : 40 }}
+                style={{
+                  width: !isMobile ? 300 : 200,
+                  height: !isMobile ? 60 : 40,
+                }}
               />
               <Typography
                 variant={isMobile ? "h5" : "h4"}
@@ -118,20 +134,50 @@ const AuthPage = ({ fetchUserProfile }) => {
 
               <form onSubmit={handleSubmit} style={{ marginTop: 10 }}>
                 {!isLogin && (
-                  <TextField
-                    label="Full Name"
-                    variant="outlined"
-                    fullWidth
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    margin="dense"
-                    sx={{
-                      bgcolor: "#f9f9f9",
-                      borderRadius: 2,
-                      "& .MuiOutlinedInput-root": { borderRadius: 2 },
-                    }}
-                  />
+                  <>
+                    <TextField
+                      label="Full Name"
+                      variant="outlined"
+                      fullWidth
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      margin="dense"
+                      sx={{
+                        bgcolor: "#f9f9f9",
+                        borderRadius: 2,
+                        "& .MuiOutlinedInput-root": { borderRadius: 2 },
+                      }}
+                    />
+                    <TextField
+                      label="Roll Number"
+                      variant="outlined"
+                      fullWidth
+                      name="rollNumber"
+                      value={formData.rollNumber}
+                      onChange={handleChange}
+                      margin="dense"
+                      sx={{
+                        bgcolor: "#f9f9f9",
+                        borderRadius: 2,
+                        "& .MuiOutlinedInput-root": { borderRadius: 2 },
+                      }}
+                    />
+                    <TextField
+                      label="Phone Number"
+                      variant="outlined"
+                      fullWidth
+                      name="mobileNo"
+                      value={formData.mobileNo}
+                      onChange={handleChange}
+                      margin="dense"
+                      sx={{
+                        bgcolor: "#f9f9f9",
+                        borderRadius: 2,
+                        "& .MuiOutlinedInput-root": { borderRadius: 2 },
+                      }}
+                    />
+                  </>
                 )}
 
                 <TextField
@@ -166,7 +212,9 @@ const AuthPage = ({ fetchUserProfile }) => {
                   }}
                 />
 
-                <motion.div whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}>
+                <motion.div
+                  whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
+                >
                   <Button
                     type="submit"
                     variant="contained"
@@ -234,7 +282,9 @@ const AuthPage = ({ fetchUserProfile }) => {
                 }}
                 onClick={() => setIsLogin(!isLogin)}
               >
-                {isLogin ? "Don't have an account? Sign up" : "Already have an account? Login"}
+                {isLogin
+                  ? "Don't have an account? Sign up"
+                  : "Already have an account? Login"}
               </Typography>
             </Paper>
           </motion.div>

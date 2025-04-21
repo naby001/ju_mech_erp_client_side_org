@@ -13,33 +13,10 @@ import {
   Button,
 } from "@mui/material";
 
-function Projects() {
-  const projectData = [
-    {
-      type: "Major",
-      mode: "Offline",
-      duration: "6 months (2023)",
-      grading: "Graded",
-      supervisor: "Dr. John Doe",
-      coSupervisor: "Dr. Jane Smith",
-      sdg: "Yes",
-      certificate: "View Certificate",
-    },
-    {
-      type: "Minor",
-      mode: "Online",
-      duration: "3 months (2022)",
-      grading: "Non-Graded",
-      supervisor: "Dr. Emily Johnson",
-      coSupervisor: "Dr. Mark Lee",
-      sdg: "No",
-      certificate: "View Certificate",
-    },
-    // Add more projects as needed
-  ];
+function Projects({ projectData }) {
 
   return (
-    <Box sx={{mb:2}}>
+    <Box sx={{ mb: 2 }}>
       <Typography variant="h4" component="h4" gutterBottom>
         Projects
       </Typography>

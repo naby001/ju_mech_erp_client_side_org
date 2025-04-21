@@ -1,5 +1,5 @@
 //? importing library components
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -26,247 +26,15 @@ import StartUp from "../components/userDetails/StartUp";
 //? Static details of the component page
 export default function UserProfile() {
 
-  //* static datas of the user, later on dynamic data will be added
-
-  const [user, setUser] = useState({
-    fullName: "Abhirup Guha Roy",
-    year: "2nd Year",
-    roll: "002311201100",
-    phone: "+91 8910232532",
-    email: "johndoe@example.com",
-    avatar: "/default-avatar.png", // Replace with the actual avatar path
-  });
-
-  const sgpaData = [
-    { semester: "Semester 1", sgpa: "8.5" },
-    { semester: "Semester 2", sgpa: "8.7" },
-    { semester: "Semester 3", sgpa: "8.9" },
-    { semester: "Semester 4", sgpa: "9.0" },
-    // Add more semesters as needed
-  ];
-
-  const professionalElectives = [
-    "Advanced Robotics",
-    "Thermal Engineering",
-    "Automobile Engineering",
-  ];
-
-  const openElectives = [
-    "Introduction to Psychology",
-    "Environmental Science",
-    "Entrepreneurship Development",
-  ];
-
-  const clubs = [
-    {
-      name: "Mechatronics Club",
-      role: "Technical Team Lead",
-      accolades: ["Best Project Award 2023"],
-      achievements: ["Developed a robotic arm"],
-      image: "/path/to/robotics-club.jpg",
-    },
-    {
-      name: "ISHRAE",
-      role: "Technical Member",
-      accolades: ["Best Design Award 2023","Best Paper Award 2023"],
-      achievements: ["Participated in HVAC design competition"],
-      image: "/path/to/coding-club.jpg",
-    },
-    {
-      name: "Motosports Club",
-      role: "Powertrain Team Member",
-      accolades: ["Best Performance Award 2023"],
-      achievements: ["Designed a fuel-efficient engine"],
-      image: "/path/to/drama-club.jpg",
-    },
-  ];
-
-  const techFests = [
-    {
-      name: "RoboFest 2023",
-      organiser: "Tech University",
-      eventType: "Robotics Competition",
-      year: 2023,
-      role: "Team Lead",
-      teammates: ["Alice", "Bob", "Charlie"],
-      outcome: "Winner",
-    },
-    {
-      name: "CodeSprint 2022",
-      organiser: "Code Academy",
-      eventType: "Hackathon",
-      year: 2022,
-      role: "Participant",
-      teammates: ["David", "Eve"],
-      outcome: "Runner-up",
-    },
-    {
-      name: "GreenTech Workshop",
-      organiser: "EcoTech",
-      eventType: "Workshop",
-      year: 2021,
-      role: "Attendee",
-      teammates: [],
-      outcome: "Certificate of Participation",
-    },
-  ];
-
-  const leadershipRoles = [
-    {
-      role: "Team Lead",
-      details: "Led a team of 5 members in a robotics competition.",
-    },
-    {
-      role: "Event Coordinator",
-      details: "Organized the annual tech fest with 200+ participants.",
-    },
-    {
-      role: "Club President",
-      details: "Managed the activities of the coding club for 2 years.",
-    },
-  ];
-
-  const skills = [
-    {
-      name: "Machine Learning",
-      offeredBy: "Coursera",
-      mode: "Online",
-      duration: "3 months",
-      fee: "50",
-    },
-    {
-      name: "Data Structures and Algorithms",
-      offeredBy: "Udemy",
-      mode: "Online",
-      duration: "2 months",
-      fee: "30",
-    },
-    {
-      name: "Thermodynamics",
-      offeredBy: "MIT OpenCourseWare",
-      mode: "Online",
-      duration: "4 months",
-      fee: "Free",
-    },
-  ];
-
-  const socialActivities = [
-    {
-      name: "Tree Plantation Drive",
-      venue: "City Park",
-      date: "2023-06-15",
-      organizer: "Green Earth Initiative",
-      role: "Volunteer",
-    },
-    {
-      name: "Blood Donation Camp",
-      venue: "Community Hall",
-      date: "2023-08-20",
-      organizer: "Red Cross Society",
-      role: "Coordinator",
-    },
-    {
-      name: "Beach Cleanup",
-      venue: "Sunny Beach",
-      date: "2023-09-10",
-      organizer: "Clean Shores Organization",
-      role: "Participant",
-    },
-  ];
-  const seminars = [
-    {
-      name: "AI and Machine Learning",
-      venue: "Tech Auditorium",
-      date: "2023-05-10",
-      role: "Speaker",
-      organizer: "Tech University",
-    },
-    {
-      name: "Sustainable Energy",
-      venue: "Green Hall",
-      date: "2023-06-15",
-      role: "Participant",
-      organizer: "EcoTech",
-    },
-    {
-      name: "Robotics Workshop",
-      venue: "Innovation Center",
-      date: "2023-07-20",
-      role: "Coordinator",
-      organizer: "Robotics Club",
-    },
-  ];
-
-  const exams = [
-    {
-      name: "GATE",
-      year: 2023,
-      specificTraining: true,
-      trainingName: "GATE Coaching",
-      trainingType: "Offline",
-      trainingMode: "Instructor-led",
-    },
-    {
-      name: "GRE",
-      year: 2022,
-      specificTraining: false,
-      trainingName: null,
-      trainingType: null,
-      trainingMode: null,
-    },
-    {
-      name: "CAT",
-      year: 2021,
-      specificTraining: true,
-      trainingName: "CAT Prep Course",
-      trainingType: "Online",
-      trainingMode: "Self-paced",
-    },
-  ];
-
-  const higherStudy = {
-    programme: "Master of Science in Artificial Intelligence",
-    tenure: "2 years",
-    institute: "Stanford University",
-    country: "United States",
-  };
-
-  const offers = [
-    {
-      company: "Google",
-      position: "Software Engineer",
-      enrollmentType: "Full-Time",
-      recruitmentType: "On-Campus",
-      year: 2023,
-      package: "$120,000 per annum",
-      accepted: false, // This offer is accepted
-    },
-    {
-      company: "Microsoft",
-      position: "Cloud Engineer",
-      enrollmentType: "Full-Time",
-      recruitmentType: "Off-Campus",
-      year: 2023,
-      package: "$110,000 per annum",
-      accepted: true, // This offer is not accepted
-    },
-    {
-      company: "Amazon",
-      position: "Data Scientist",
-      enrollmentType: "Internship",
-      recruitmentType: "On-Campus",
-      year: 2022,
-      package: "$80,000 per annum",
-      accepted: false, // This offer is not accepted
-    },
-  ];
-
-  const startupDetails = {
-    pastInitiatives: "Developed a food delivery startup during college, focusing on sustainable packaging.",
-    futureInterest: "Interested in forming a tech startup focusing on AI-driven solutions.",
-    universitySupport: true,
-    externalSupport: false,
-  };
+  //* datas of the user
+  const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+  // useEffect(() => {
+  //   console.log("UserProfile component mounted");
+  //   const storedUser = localStorage.getItem("user");
+  //   if (storedUser) {
+  //     setUser(JSON.parse(storedUser));
+  //   }
+  // }, []);
 
   return (
     <Box
@@ -308,38 +76,39 @@ export default function UserProfile() {
             height: "calc(100vh - 64px)",
           }}
         >
+
           {/* Main Content */}
-          <Typography variant="h3" component="h3" sx={{fontWeight: "bold"}} gutterBottom>
-            Welcome, {user.fullName}
+          <Typography variant="h3" component="h3" sx={{ fontWeight: "bold" }} gutterBottom>
+            Welcome, {user.name}
           </Typography>
           {/* Grade details of the user */}
-          <UserDetailsRightGrade sgpaData = {sgpaData}/>
+          {user.acedamicInfo?.grades !== undefined && <UserDetailsRightGrade user={user.acedamicInfo.grades} />}
           {/* Professional Electives Section */}
-          <ProfessionalElective electives={professionalElectives} />
+          {user.acedamicInfo?.selectedProfessional && <ProfessionalElective electives={user.acedamicInfo.selectedProfessional} />}
           {/* Open Electives Section */}
-          <OpenElective electives={openElectives} />
+          {user.acedamicInfo?.selectedOpen && <OpenElective electives={user.acedamicInfo.selectedOpen} />}
           {/* Projects done by the candidate */}
-          <Projects />
+          {user.acedamicInfo?.projectDetails && <Projects projectData={user.acedamicInfo.projectDetails} />}
           {/* Clubs joined by the candidate */}
-          <Club clubs={clubs} />
+          {user.curricularInfo?.clubs && <Club clubs={user.curricularInfo.clubs} />}
           {/* Tech fests participated by the candidate */}
-          <TechFests techFests={techFests} />
+          {user.curricularInfo?.techFests && <TechFests techFests={user.curricularInfo.techFests} />}
           {/* Leaderchip Roles */}
-          <Leadership roles={leadershipRoles} />
+          {user.curricularInfo?.leadership && <Leadership leadership={user.curricularInfo.leadership} />}
           {/* Skills pursued by the user */}
-          <Skills skills={skills} />
+          {user.curricularInfo?.skills && <Skills skills={user.curricularInfo.skills} />}
           {/* Social Actvities of the user */}
-          <SocialActivities activities={socialActivities} />;
+          {user.curricularInfo?.socialActivities && <SocialActivities socialActivities={user.curricularInfo.socialActivities} />}
           {/* Seminars attended by the user */}
-          <Seminar seminars={seminars} />
+          {user.curricularInfo?.seminars && <Seminar seminars={user.curricularInfo.seminars} />}
           {/* Competitive Exams attended by the user */}
-          <CompetitiveExam exams={exams} />
+          {user.careerProgression?.exams && <CompetitiveExam exams={user.careerProgression.exams} />}
           {/* Higher studies the user is pursueing */}
-          <HigherStudy higherStudy={higherStudy} />
+          {user.careerProgression?.higherStudy && <HigherStudy higherStudy={user.careerProgression.higherStudy} />}
           {/* Placement offers got by the user */}
-          <Placement offers={offers} />
+          {user.careerProgression?.placement && <Placement placement={user.careerProgression.placement} />}
           {/* Startups */}
-          <StartUp startupDetails={startupDetails} />
+          {user.careerProgression?.startup && <StartUp startup={user.careerProgression.startup} />}
 
         </Box>
       </Box>

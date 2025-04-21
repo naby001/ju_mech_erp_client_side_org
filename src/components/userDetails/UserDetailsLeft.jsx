@@ -1,8 +1,14 @@
 import React from "react";
 import { Box, Typography, Avatar, Button } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit"; // Import the Edit icon
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 export default function UserDetailsLeft({ user }) {
+  const navigate = useNavigate(); // Initialize useNavigate
+  const handleEditClick = () => {
+    navigate(`/updateform/${user.name}`); // Navigate to the edit profile page
+  };
+
   return (
     <Box
       sx={{
@@ -16,7 +22,7 @@ export default function UserDetailsLeft({ user }) {
     >
       <Avatar
         src={user.avatar}
-        alt={user.fullName}
+        alt={user.name}
         sx={{
           width: 120,
           height: 120,
@@ -26,16 +32,13 @@ export default function UserDetailsLeft({ user }) {
         }}
       />
       <Typography variant="h5" component="h2" gutterBottom>
-        {user.fullName}
+        {user.name}
       </Typography>
       <Typography variant="body1" component="p" gutterBottom>
-        <b>Year:</b> {user.year}
+        <b>Roll:</b> {user.rollNumber}
       </Typography>
       <Typography variant="body1" component="p" gutterBottom>
-        <b>Roll:</b> {user.roll}
-      </Typography>
-      <Typography variant="body1" component="p" gutterBottom>
-        <b>Phone:</b> {user.phone}
+        <b>Phone:</b> {user.mobileNo}
       </Typography>
       <Typography variant="body1" component="p" gutterBottom>
         <b>Email:</b> {user.email}
@@ -52,7 +55,7 @@ export default function UserDetailsLeft({ user }) {
             backgroundColor: "#36454F", // Darker shade on hover
           },
         }}
-        onClick={() => alert("Edit Dashboard clicked!")} // Replace with actual functionality
+        onClick={() => handleEditClick()} // Replace with actual functionality
       >
         Edit Dashboard
       </Button>

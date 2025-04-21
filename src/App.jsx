@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 //? importing pages
@@ -42,7 +47,9 @@ function App() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const token = document.cookie.split("; ").find((row) => row.startsWith("token="));
+    const token = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("token="));
     if (token) {
       if (localStorage.getItem("user")) {
         fetchUserProfile(token.split("=")[1]); // e
@@ -52,18 +59,21 @@ function App() {
     } else {
       dispatch(setLogout());
     }
-  }, [dispatch])
+  }, [dispatch]);
 
   //todo Have to do local storage encryption later on for data security
   const fetchUserProfile = async (token) => {
     try {
-      const response = await fetch("http://localhost:5000/users/creds-primary", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "http://localhost:5000/users/creds-primary",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = await response.json();
       if (response.ok) {
         dispatch(setLogin({ user: data.user, token }));
@@ -74,17 +84,23 @@ function App() {
     } catch (error) {
       console.error("Error fetching user profile:", error);
     }
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/auth" element={<AuthPage fetchUserProfile={fetchUserProfile} />} />
-          <Route path="/updateform" element={<StudentPortfolio />} />
+          <Route
+            path="/auth"
+            element={<AuthPage fetchUserProfile={fetchUserProfile} />}
+          />
+          <Route path="/updateform/:username" element={<StudentPortfolio />} />
           <Route path="/profile/:username" element={<UserProfile />} />
-          <Route path="/dashboard" element={user ? <DashboardPage /> : <AuthPage />} />
+          <Route
+            path="/dashboard"
+            element={user ? <DashboardPage /> : <AuthPage />}
+          />
           <Route path="/admin" element={<AdminPortal />} />
         </Routes>
       </Router>
