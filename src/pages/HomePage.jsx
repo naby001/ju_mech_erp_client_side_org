@@ -63,6 +63,9 @@ const faculty = [
 
 export default function HomePage() {
 
+  const token = document.cookie.split("; ").find((row) => row.startsWith("token="));
+  const user = token ? JSON.parse(atob(token.split("=")[1].split(".")[1])) : null;
+
   return (
     <Box sx={{ height: "100vh", overflowY: "scroll", overflowX: "hidden" }}>
       <Navbar />
@@ -94,6 +97,8 @@ export default function HomePage() {
         <Button
           variant="outlined"
           color="inherit"
+          component={Link}
+          to={user ? `/profile/${user.name}` : "/auth"}
           sx={{
             mt: 2,
             borderColor: "#b70924",
@@ -105,7 +110,7 @@ export default function HomePage() {
             },
           }}
         >
-          Sign In To Get Started
+          {user ? "Check Your Profile" : "Sign In To Get Started"}
         </Button>
       </Box>
 

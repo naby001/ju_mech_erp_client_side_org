@@ -19,7 +19,7 @@ import bg from "../assets/user_login_bg.jpeg";
 const PRIMARY_COLOR = "#b70924";
 const WHITE = "#ffffff";
 
-const AuthPage = () => {
+const AuthPage = ({ fetchUserProfile }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ fullName: "", email: "", password: "" });
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -50,6 +50,7 @@ const AuthPage = () => {
         dispatch(setLogin({ user: returneddata.user, token: returneddata.token }));
       }
       navigate("/");
+      fetchUserProfile(returneddata.token); // Fetch user profile after login/signup
     } catch (error) {
       console.error("Error during authentication:", error);
     }

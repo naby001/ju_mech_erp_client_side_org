@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Box, Button, Avatar, Menu, MenuItem } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setLogout } from "../state";
 
 export default function Navbar() {
+
   const dispatch = useDispatch();
   const token = document.cookie.split("; ").find((row) => row.startsWith("token="));
   const user = token ? JSON.parse(atob(token.split("=")[1].split(".")[1])) : null;
@@ -14,7 +15,9 @@ export default function Navbar() {
   const handleLogout = () => {
     document.cookie = "token=; path=/; max-age=0; secure; SameSite=Strict";
     dispatch(setLogout());
+    localStorage.clear();
     navigate("/");
+    return
   }
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -71,7 +74,7 @@ export default function Navbar() {
           >
             {user ? (
               [
-                <MenuItem key="user - name" component={Link} to="/auth" onClick={handleMenuClose}>
+                <MenuItem key="user - name" component={Link} to={`/profile/${user.name}`} onClick={handleMenuClose}>
                   {user.name}
                 </MenuItem>,
                 <MenuItem key="logout" component={Link} onClick={handleLogout}>
