@@ -18,76 +18,83 @@ import MiscellaneousForms from "../forms/miscellaneous-forms"; // form component
 //? importing components
 import Sidebar from "../components/Sidebar"; // sidebar component
 
-export default function MultiStepForm({ onChange }) {
+export default function MultiStepForm({ fetchUserProfile }) {
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
+
+  //* states to control the active section of the form
   const [activeSection, setActiveSection] = useState(0); //state to control session
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:900px)"); // responsive state property
 
   //* state object to store personal details/general info of student
   const [personalformData, setPersonalFormData] = useState({
-    name: "",
-    dob: "",
-    gender: "",
-    category: "",
-    isPwd: false,
-    mobileNo: "",
-    whatsappNo: "",
-    email: "",
-    alternateEmail: "",
-    presentAddress: "",
-    presentState: "",
-    permanentAddress: "",
-    permanentState: "",
-    emergencyContactName: "",
-    emergencyContactNumber: "",
-    emergencyContactRelation: "",
-    nationality: "",
-    idType: "",
-    idNumber: "",
-    familyIncome: "",
+    name: user?.personalInfo?.name || "",
+    dob: user?.personalInfo?.dob || "",
+    gender: user?.personalInfo?.gender || "",
+    category: user?.personalInfo?.category || "",
+    isPwd: user?.personalInfo?.isPwd || false,
+    mobileNo: user?.personalInfo?.mobileNo || "",
+    whatsappNo: user?.personalInfo?.whatsappNo || "",
+    email: user?.personalInfo?.email || "",
+    alternateEmail: user?.personalInfo?.alternateEmail || "",
+    presentAddress: user?.personalInfo?.presentAddress || "",
+    presentState: user?.personalInfo?.presentState || "",
+    permanentAddress: user?.personalInfo?.permanentAddress || "",
+    permanentState: user?.personalInfo?.permanentState || "",
+    emergencyContactName: user?.personalInfo?.emergencyContactName || "",
+    emergencyContactNumber: user?.personalInfo?.emergencyContactNumber || "",
+    emergencyContactRelation:
+      user?.personalInfo?.emergencyContactRelation || "",
+    nationality: user?.personalInfo?.nationality || "",
+    idType: user?.personalInfo?.idType || "",
+    idNumber: user?.personalInfo?.idNumber || "",
+    familyIncome: user?.personalInfo?.familyIncome || "",
   });
 
   //* State to control enrollment details of the student resistered in JU
   const [enrollformData, setEnrollFormData] = useState({
-    rollNumber: "",
-    section: "",
-    programme: "",
-    isLateralEntry: false,
-    admissionYear: "",
-    currentSemester: "",
-    currentYear: "",
-    expectedGraduationYear: "",
-    registrationNumber: "",
-    registrationYear: "",
-    mentorName: "",
-    hasScholarship: false,
-    scholarshipDetails: "",
+    rollNumber: user?.enrollmentDetails?.rollNumber || "",
+    section: user?.enrollmentDetails?.section || "",
+    programme: user?.enrollmentDetails?.programme || "",
+    isLateralEntry: user?.enrollmentDetails?.isLateralEntry || false,
+    admissionYear: user?.enrollmentDetails?.admissionYear || "",
+    currentSemester: user?.enrollmentDetails?.currentSemester || "",
+    currentYear: user?.enrollmentDetails?.currentYear || "",
+    expectedGraduationYear:
+      user?.enrollmentDetails?.expectedGraduationYear || "",
+    registrationNumber: user?.enrollmentDetails?.registrationNumber || "",
+    registrationYear: user?.enrollmentDetails?.registrationYear || "",
+    mentorName: user?.enrollmentDetails?.mentorName || "",
+    hasScholarship: user?.enrollmentDetails?.hasScholarship || false,
+    scholarshipDetails: user?.enrollmentDetails?.scholarshipDetails || "",
   });
 
   //* state to control school acedamic background details
   const [acadbackformData, setAcadBackFormData] = useState({
-    secondaryMarks: "",
-    secondaryYear: "",
-    higherSecondaryMarks: "",
-    higherSecondaryYear: "",
-    mediumOfEducation: "",
-    entranceExamName: "",
-    entranceExamRank: "",
-    entranceExamYear: "",
+    secondaryMarks: user?.academicBackground?.secondaryMarks || "",
+    secondaryYear: user?.academicBackground?.secondaryYear || "",
+    higherSecondaryMarks: user?.academicBackground?.higherSecondaryMarks || "",
+    higherSecondaryYear: user?.academicBackground?.higherSecondaryYear || "",
+    mediumOfEducation: user?.academicBackground?.mediumOfEducation || "",
+    entranceExamName: user?.academicBackground?.entranceExamName || "",
+    entranceExamRank: user?.academicBackground?.entranceExamRank || "",
+    entranceExamYear: user?.academicBackground?.entranceExamYear || "",
   });
 
   //* state to control acedamic details at the university
   const [acedamicformData, setAcedamicFormData] = useState({
-    grades: [
+    grades: user?.acedamicInfo?.grades || [
       {
         semester: 1,
         sgpa: "",
         cgpa: "",
       },
     ],
-    selectedProfessional: [],
-    selectedOpen: [],
-    projectDetails: [
+    selectedProfessional: user?.acedamicInfo?.selectedProfessional || [],
+    selectedOpen: user?.acedamicInfo?.selectedOpen || [],
+    projectDetails: user?.acedamicInfo?.projectDetails || [
       {
         title: "",
         type: "",
@@ -100,11 +107,11 @@ export default function MultiStepForm({ onChange }) {
         institute: "",
         sdgConnection: false,
         outcome: "",
-        certificate: [],
+        certificate: null,
       },
     ],
     publications: {
-      journalPapers: [
+      journalPapers: user?.acedamicInfo?.publications?.journalPapers || [
         {
           title: "",
           journalName: "",
@@ -114,7 +121,7 @@ export default function MultiStepForm({ onChange }) {
           firstPage: "",
         },
       ],
-      conferencePapers: [
+      conferencePapers: user?.acedamicInfo?.publications?.conferencePapers || [
         {
           title: "",
           conferenceName: "",
@@ -123,17 +130,17 @@ export default function MultiStepForm({ onChange }) {
           organizedBy: "",
         },
       ],
-      patent: [
+      patent: user?.acedamicInfo?.publications?.patent || [
         {
           title: "",
           details: "",
           applno: "",
           patno: "",
-          certificate: "",
+          certificate: null,
         },
       ],
     },
-    courses: [
+    courses: user?.acedamicInfo?.publications?.courses || [
       {
         name: "",
         duration: "",
@@ -146,34 +153,40 @@ export default function MultiStepForm({ onChange }) {
         creditTransfer: "",
         gradeCard: "",
         certificate: null,
-      }
+      },
     ],
-    trainings: [{
-      place: "",
-      duration: 0,
-      mode: "",
-      noCredits: "",
-      organizedBy: "",
-      certificate: null,
-    }],
-    interns: [{
-      place: "",
-      duration: "",
-      mode: "",
-      noCredits: "",
-      platfom: "",
-      organizedBy: "",
-      certificate: null,
-    }],
-    remedial: [{
-      num: 0,
-      name: "",
-    }],
+    trainings: user?.acedamicInfo?.publications?.trainings || [
+      {
+        place: "",
+        duration: 0,
+        mode: "",
+        noCredits: "",
+        organizedBy: "",
+        certificate: null,
+      },
+    ],
+    interns: user?.acedamicInfo?.publications?.interns || [
+      {
+        place: "",
+        duration: "",
+        mode: "",
+        noCredits: "",
+        platfom: "",
+        organizedBy: "",
+        certificate: null,
+      },
+    ],
+    remedial: user?.acedamicInfo?.publications?.remedial || [
+      {
+        num: 0,
+        name: "",
+      },
+    ],
   });
 
   //* state to control placement details at the university
   const [placementformData, setPlacementFormData] = useState({
-    placements: [
+    placement: user?.careerProgression?.placement || [
       {
         company: "",
         position: "",
@@ -181,10 +194,11 @@ export default function MultiStepForm({ onChange }) {
         recruitmentType: "",
         year: "",
         package: "",
+        accepted: false,
         offerLetter: null,
       },
     ],
-    competitiveExam: [
+    competitiveExam: user?.careerProgression?.exams || [
       {
         examinationName: "",
         year: "",
@@ -196,13 +210,13 @@ export default function MultiStepForm({ onChange }) {
         rankCard: null,
       },
     ],
-    higherStudy: {
+    higherStudy: user?.careerProgression?.higherStudy || {
       programme: "",
       duration: "",
       university: "",
       country: "",
     },
-    startup: {
+    startup: user?.careerProgression?.startup || {
       details: "",
       support: "",
       externalSupport: "",
@@ -211,35 +225,35 @@ export default function MultiStepForm({ onChange }) {
 
   //* state to control extra-curricular and co-curricular form details
   const [curricularformData, setCurricularFormData] = useState({
-    clubs: [
+    clubs: user?.curricularInfo?.clubs || [
       {
         name: "",
         role: "",
-        accolades: "",
-        achievements: "",
+        accolades: [""],
+        achievements: [""],
         certificate: null,
       },
     ],
-    techFests: [
+    techFests: user?.curricularInfo?.techfests || [
       {
         name: "",
         organizer: "",
         eventType: "",
         year: "",
         role: "",
-        teammates: "",
+        teammates: [""],
         outcome: "",
         certificate: null,
       },
     ],
-    leadership: [
+    leadership: user?.curricularInfo?.leadership || [
       {
         role: "",
         details: "",
         certificate: null,
       },
     ],
-    sports: [
+    sports: user?.curricularInfo?.sports || [
       {
         name: "",
         level: "",
@@ -247,10 +261,10 @@ export default function MultiStepForm({ onChange }) {
         year: "",
         result: "",
         accolades: "",
-        certificate: "",
+        certificate: null,
       },
     ],
-    skills: [
+    skills: user?.curricularInfo?.skills || [
       {
         name: "",
         offeredby: "",
@@ -260,7 +274,7 @@ export default function MultiStepForm({ onChange }) {
         certificate: null,
       },
     ],
-    socialActivities: [
+    socialActivities: user?.curricularInfo?.socialActivities || [
       {
         name: "",
         details: "",
@@ -269,7 +283,7 @@ export default function MultiStepForm({ onChange }) {
         certificate: null,
       },
     ],
-    seminars: {
+    seminars: user?.curricularInfo?.seminars || {
       name: "",
       venue: "",
       date: "",
@@ -359,19 +373,56 @@ export default function MultiStepForm({ onChange }) {
     });
   };
 
-  //& function to handle the submit of the form
-  const handleSubmit = () => {
+  //& function to handle submit of the form data to the server
+  const handleFormSubmit = async () => {
     const allFormData = {
-      personalformData,
-      enrollformData,
-      acadbackformData,
-      acedamicformData,
-      placementformData,
-      curricularformData,
-      miscformData,
+      personalInfo: personalformData,
+      enrollmentDetails: enrollformData,
+      acedamicBackground: acadbackformData,
+      acedamicInfo: acedamicformData,
+      careerProgression: {
+        placement: placementformData.placement,
+        exams: placementformData.competitiveExam,
+        higherStudy: placementformData.higherStudy,
+        startup: placementformData.startup,
+      },
+      curricularInfo: curricularformData,
+      miscellenous: miscformData,
+    };
+
+    console.log(placementformData);
+
+    //for submitting form data to the server
+    try {
+      const response = await fetch(
+        "http://localhost:5000/users/details-submit",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(allFormData),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Form submitted successfully:", data);
+
+        // fetch user details after form submission
+        const token = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("token="));
+        if (token) {
+          fetchUserProfile(token.split("=")[1]);
+        }
+      } else {
+        console.error("Error submitting form:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
     }
-    console.log(allFormData)
-  }
+  };
 
   //^ For debugging purpose (checking form details in console)
   const logStateValues = (activeComponent) => {
@@ -575,7 +626,7 @@ export default function MultiStepForm({ onChange }) {
                 "&:hover": { background: "#2e7d32" },
                 width: "20%",
               }}
-              onClick={() => handleSubmit()}
+              onClick={() => handleFormSubmit()}
             >
               Submit
             </Button>

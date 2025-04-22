@@ -95,7 +95,10 @@ function App() {
             path="/auth"
             element={<AuthPage fetchUserProfile={fetchUserProfile} />}
           />
-          <Route path="/updateform/:username" element={<StudentPortfolio />} />
+          <Route
+            path="/updateform/:username"
+            element={<StudentPortfolio fetchUserProfile={fetchUserProfile} />}
+          />
           <Route path="/profile/:username" element={<UserProfile />} />
           <Route
             path="/dashboard"

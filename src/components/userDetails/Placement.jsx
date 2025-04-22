@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 
 function Placement({ offers }) {
+  console.log(offers);
   const [selectedOffer, setSelectedOffer] = useState(offers[0]); // Default to the first offer
 
   return (
