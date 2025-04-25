@@ -65,8 +65,7 @@ export default function DashboardPage() {
           sx={{
             bgcolor: selectedTab === "Logout" ? "white" : "transparent",
             width: "100%",
-            borderTopLeftRadius: selectedTab === "Logout" ? 16 : 0,
-            borderBottomLeftRadius: selectedTab === "Logout" ? 16 : 0
+           borderRadius:6
           }}
           onClick={() => {
             setselectedTab("Logout");
