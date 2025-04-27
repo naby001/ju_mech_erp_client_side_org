@@ -1,6 +1,6 @@
 //? importing library components
 import React, { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 
 //? Componenets of the regular user profile page
 import Navbar from "../components/Navbar";
@@ -26,13 +26,9 @@ export default function UserProfile() {
   const user = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
     : null;
-  // useEffect(() => {
-  //   console.log("UserProfile component mounted");
-  //   const storedUser = localStorage.getItem("user");
-  //   if (storedUser) {
-  //     setUser(JSON.parse(storedUser));
-  //   }
-  // }, []);
+
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
+
   return (
     <Box
       sx={{
@@ -42,20 +38,27 @@ export default function UserProfile() {
       }}
     >
       <Navbar />
-      <Box sx={{ display: "flex", height: "calc(100vh - 64px)", mt: "64px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: isSmallScreen ? "column" : "row",
+          height: isSmallScreen ? "auto" : "calc(100vh - 64px)",
+          mt: "64px",
+        }}
+      >
         {/* Left Column: Fixed Side Profile */}
         <Box
           sx={{
-            position: "fixed",
-            top: "64px", // Adjust for the height of the Navbar
+            position: isSmallScreen ? "relative" : "fixed",
+            top: isSmallScreen ? "auto" : "64px",
             left: 0,
-            width: "25%", // Adjust width as needed
-            height: "calc(100vh - 64px)",
+            width: isSmallScreen ? "100%" : "25%",
+            height: isSmallScreen ? "auto" : "calc(100vh - 64px)",
             backgroundColor: "rgba(183, 9, 36, 1)",
             padding: "20px",
-            borderRight: "1px solid #ddd",
+            borderRight: isSmallScreen ? "none" : "1px solid #ddd",
             color: "#fff",
-            overflowY: "auto", // Allow scrolling if content overflows
+            overflowY: isSmallScreen ? "visible" : "auto",
           }}
         >
           {/* Primary user details of the user */}
@@ -66,11 +69,11 @@ export default function UserProfile() {
         {/* Right Column: Scrollable Main Content */}
         <Box
           sx={{
-            marginLeft: "25%", // Matches the width of the left column
-            width: "75%", // Remaining width
+            marginLeft: isSmallScreen ? 0 : "25%",
+            width: isSmallScreen ? "100%" : "75%",
             padding: "20px",
-            overflowY: "auto", // Enable vertical scrolling
-            height: "calc(100vh - 64px)",
+            overflowY: "auto",
+            height: isSmallScreen ? "auto" : "calc(100vh - 64px)",
           }}
         >
           {/* Main Content */}
