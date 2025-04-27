@@ -550,7 +550,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         <>
           <Navbar />
           <IconButton
-            sx={{ position: "absolute", top: 16, left: 16, zIndex: 1300 }} // Ensure button is above other elements
+            sx={{ position: "absolute", top: 16, left: 16 }}
             onClick={() => setMobileSidebarOpen(true)}
           >
             <MenuIcon />
@@ -559,19 +559,10 @@ export default function MultiStepForm({ fetchUserProfile }) {
             anchor="left"
             open={mobileSidebarOpen}
             onClose={() => setMobileSidebarOpen(false)}
-            sx={{
-              "& .MuiDrawer-paper": {
-                width: "250px", // Set sidebar width
-                backgroundColor: "#b70924", // Match sidebar color
-              },
-            }}
           >
             <Sidebar
               activeSection={activeSection}
-              setActiveSection={(index) => {
-                setActiveSection(index);
-                setMobileSidebarOpen(false); // Close drawer on section selection
-              }}
+              setActiveSection={setActiveSection}
             />
           </Drawer>
         </>
