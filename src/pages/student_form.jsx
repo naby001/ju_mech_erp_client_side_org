@@ -17,7 +17,8 @@ import CoCurricularForm from "../forms/co-curricular-form"; // form component fo
 import MiscellaneousForms from "../forms/miscellaneous-forms"; // form component for handling the miscellenous details of the student
 //? importing components
 import Sidebar from "../components/Sidebar"; // sidebar component
-import { SignalCellularConnectedNoInternet1BarSharp } from "@mui/icons-material";
+import { Menu as MenuIcon } from "@mui/icons-material"; // Import MenuIcon for mobile sidebar
+import Navbar from "../components/Navbar"; // Import Navbar for mobile view
 
 export default function MultiStepForm({ fetchUserProfile }) {
   const user = localStorage.getItem("user")
@@ -91,7 +92,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         semester: 1,
         sgpa: "",
         cgpa: "",
-        gradecard:null
+        gradecard: null,
       },
     ],
     selectedProfessional: user?.acedamicInfo?.selectedProfessional || [],
@@ -533,7 +534,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         width: "100vw",
         height: "100vh",
         display: "flex",
-        flexDirection: isMobile ? "column" : "row",
+        flexDirection: isMobile ? "column" : "row", // Adjust layout for mobile
         overflowY: isMobile ? "auto" : "hidden",
         backgroundColor: "white",
       }}
@@ -573,7 +574,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          padding: isMobile ? "50px" : "70px",
+          padding: isMobile ? "50px" : "70px", // Adjust padding for mobile
           width: "100%",
           overflowY: "auto",
         }}
@@ -585,10 +586,10 @@ export default function MultiStepForm({ fetchUserProfile }) {
           {sections[activeSection].title}
         </Typography>
 
-        {/* component selection based on activeSession state  */}
+        {/* component selection based on activeSession state */}
         {sections[activeSection].component}
 
-        {/* If mobile use button to proeed to next page */}
+        {/* If mobile use button to proceed to next page */}
         <Box
           sx={{
             display: "flex",
@@ -606,7 +607,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
                 background: "#b70924",
                 color: "#fff",
                 "&:hover": { background: "#90071d" },
-                width: "20%",
+                width: isMobile ? "40%" : "20%", // Adjust button width for mobile
               }}
               onClick={() =>
                 setActiveSection((prev) =>
@@ -626,7 +627,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
                 background: "#388e3c",
                 color: "#fff",
                 "&:hover": { background: "#2e7d32" },
-                width: "20%",
+                width: isMobile ? "40%" : "20%", // Adjust button width for mobile
               }}
               onClick={() => handleFormSubmit()}
             >
@@ -641,7 +642,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
               color: "#b70924",
               borderColor: "#b70924",
               "&:hover": { background: "#f5f5f5" },
-              width: "20%",
+              width: isMobile ? "40%" : "20%", // Adjust button width for mobile
             }}
             onClick={() => logStateValues(sections[activeSection].title)}
           >

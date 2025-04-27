@@ -1,37 +1,43 @@
 import React from "react";
-import { Box, Typography, Avatar, Button } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit"; // Import the Edit icon
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { Box, Typography, Avatar, Button, useMediaQuery } from "@mui/material"; // Added useMediaQuery
+import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate } from "react-router-dom";
 
 export default function UserDetailsLeft({ user }) {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width:600px)"); // Check for mobile screens
+
   const handleEditClick = () => {
-    navigate(`/updateform/${user.name}`); // Navigate to the edit profile page
+    navigate(`/updateform/${user.name}`);
   };
 
   return (
     <Box
       sx={{
-        padding: "20px",
+        padding: isMobile ? "10px" : "20px", // Adjust padding for mobile
         color: "#fff",
         textAlign: "center",
-        display: "flex", // Flexbox for vertical alignment
-        flexDirection: "column", // Stack items vertically
-        height: "100%", // Full height to push the button to the bottom
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
       }}
     >
       <Avatar
         src={user.avatar}
         alt={user.name}
         sx={{
-          width: 120,
-          height: 120,
+          width: isMobile ? 80 : 120, // Adjust size for mobile
+          height: isMobile ? 80 : 120,
           margin: "0 auto 20px",
-          border: "10px solid #36454F", // Added border
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Optional: Add shadow for better appearance
+          border: "10px solid #36454F",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
         }}
       />
-      <Typography variant="h5" component="h2" gutterBottom>
+      <Typography
+        variant={isMobile ? "h6" : "h5"} // Adjust font size for mobile
+        component="h2"
+        gutterBottom
+      >
         {user.name}
       </Typography>
       <Typography variant="body1" component="p" gutterBottom>
@@ -44,18 +50,18 @@ export default function UserDetailsLeft({ user }) {
         <b>Email:</b> {user.email}
       </Typography>
 
-      {/* Edit Dashboard Button */}
       <Button
         variant="outlined"
         color="white"
-        startIcon={<EditIcon />} // Add the Edit icon here
+        startIcon={<EditIcon />}
         sx={{
-          marginTop: "auto", // Push the button to the bottom
+          marginTop: "auto",
+          fontSize: isMobile ? "0.8rem" : "1rem", // Adjust font size for mobile
           "&:hover": {
-            backgroundColor: "#36454F", // Darker shade on hover
+            backgroundColor: "#36454F",
           },
         }}
-        onClick={() => handleEditClick()} // Replace with actual functionality
+        onClick={() => handleEditClick()}
       >
         Edit Dashboard
       </Button>

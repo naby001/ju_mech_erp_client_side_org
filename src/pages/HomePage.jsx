@@ -46,25 +46,31 @@ const faculty = [
   {
     name: "Dr. John Doe",
     title: "Professor of Mechanical Engineering",
-    image: "/path/to/image1.jpg",
+    image:
+      "https://images.pexels.com/photos/3748221/pexels-photo-3748221.jpeg?auto=compress&cs=tinysrgb&h=350",
   },
   {
     name: "Dr. Jane Smith",
     title: "Associate Professor of Robotics",
-    image: "/path/to/image2.jpg",
+    image:
+      "https://images.pexels.com/photos/3182749/pexels-photo-3182749.jpeg?auto=compress&cs=tinysrgb&h=350",
   },
   {
     name: "Dr. Emily Johnson",
     title: "Assistant Professor of Thermodynamics",
-    image: "/path/to/image3.jpg",
+    image:
+      "https://images.pexels.com/photos/3775536/pexels-photo-3775536.jpeg?auto=compress&cs=tinysrgb&h=350",
   },
   // Add more faculty members as needed
 ];
 
 export default function HomePage() {
-
-  const token = document.cookie.split("; ").find((row) => row.startsWith("token="));
-  const user = token ? JSON.parse(atob(token.split("=")[1].split(".")[1])) : null;
+  const token = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("token="));
+  const user = token
+    ? JSON.parse(atob(token.split("=")[1].split(".")[1]))
+    : null;
 
   return (
     <Box sx={{ height: "100vh", overflowY: "scroll", overflowX: "hidden" }}>
@@ -120,30 +126,44 @@ export default function HomePage() {
       <Box
         sx={{
           mt: 6,
-          textAlign: 'center',
-          padding: '40px 20px',
-          borderRadius: '8px',
-          backgroundImage: 'url(/path/to/your/background-image.jpg)', // Add your background image path here
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          color: '#fff', // Change text color to white for better contrast
+          textAlign: "center",
+          padding: "40px 20px",
+          borderRadius: "8px",
+          backgroundImage: "url(/path/to/your/background-image.jpg)", // Add your background image path here
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          color: "#fff", // Change text color to white for better contrast
         }}
       >
-        <Box sx={{ width: '80%', margin: 'auto', backgroundColor: 'rgba(0, 0, 0, 0.6)', padding: '20px', borderRadius: '8px' }}>
+        <Box
+          sx={{
+            width: "80%",
+            margin: "auto",
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            padding: "20px",
+            borderRadius: "8px",
+          }}
+        >
           <Typography variant="h4" component="h2" gutterBottom>
             <b>What is JUMERP?</b>
           </Typography>
           <Typography variant="body1" component="p" gutterBottom>
-            Welcome to the Student Portfolio Management System. Our platform is designed to help students manage their academic and extracurricular activities efficiently. With our system, you can keep track of your progress, participate in events, and stay updated with the latest news and announcements.
+            Welcome to the Student Portfolio Management System. Our platform is
+            designed to help students manage their academic and extracurricular
+            activities efficiently. With our system, you can keep track of your
+            progress, participate in events, and stay updated with the latest
+            news and announcements.
           </Typography>
           <Typography variant="body1" component="p" gutterBottom>
-            Our mission is to provide a comprehensive solution for students to excel in their academic journey and beyond. Join us and take the first step towards a well-organized and successful student life.
+            Our mission is to provide a comprehensive solution for students to
+            excel in their academic journey and beyond. Join us and take the
+            first step towards a well-organized and successful student life.
           </Typography>
         </Box>
       </Box>
 
       {/* Facilities part */}
-      <Box sx={{ mt: 6, textAlign: 'center', padding: '20px' }}>
+      <Box sx={{ mt: 6, textAlign: "center", padding: "20px" }}>
         <Typography variant="h4" component="h2" gutterBottom>
           Facilities
         </Typography>
@@ -152,14 +172,14 @@ export default function HomePage() {
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Box
                 sx={{
-                  padding: '20px',
-                  borderRadius: '8px',
-                  backgroundColor: '#f5f5f5',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                  transition: 'transform 0.3s',
-                  '&:hover': {
-                    transform: 'scale(1.05)',
-                    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+                  padding: "20px",
+                  borderRadius: "8px",
+                  backgroundColor: "#f5f5f5",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  transition: "transform 0.3s",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
                   },
                 }}
               >
