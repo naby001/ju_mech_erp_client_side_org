@@ -18,9 +18,11 @@ import {
   Tab,
   FormControlLabel,
   Checkbox,
+  IconButton
 } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 import FileUploadField from "../pages/file-upload-field";
+import { CloudUpload, Cancel,CloudDone } from "@mui/icons-material";
 
 //* Props: TabPanel expects children (ReactNode), index (number), and value (number)
 function TabPanel({ children, value, index, ...other }) {
@@ -126,9 +128,11 @@ export default function ProgressionForm({ formData, handleChange }) {
 
   //& functions to add sections in progression form
   //? function to ass new placement offer
+  console.log(formData.placement);
   const addOffer = () => {
+    //console.log(formData.placement);
     const newOffers = [
-      ...formData.placements,
+      ...formData.placement,
       {
         company: "",
         posititon: "",
@@ -139,7 +143,7 @@ export default function ProgressionForm({ formData, handleChange }) {
         offerLetter: null,
       },
     ];
-    handleChange({ target: { name: "placements", value: newOffers } });
+    handleChange({ target: { name: "placement", value: newOffers } });
   };
 
   //? function to add section in exams
@@ -172,6 +176,21 @@ export default function ProgressionForm({ formData, handleChange }) {
     const modifiedExam = formData.competitiveExam.filter((_, i) => i != index);
     handleChange({ target: { name: "competitiveExam", value: modifiedExam } });
   };
+
+  function Uploadcompet(index) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf,.jpg,.png'; // allow only specific types (optional)
+    input.onchange = (event) => {
+      const file = event.target.files[0];
+       uploadFileToCloudinary(file).then((url) => {;
+            
+              formData.competitiveExam[index].rankcard = url;
+              console.log(url);
+            })
+    };
+    input.click();
+  }
 
   return (
     <Box>
@@ -217,7 +236,7 @@ export default function ProgressionForm({ formData, handleChange }) {
 
         {ifPlaced && (
           <>
-            {formData.placements.map((placement, index) => (
+            { formData.placement>0 && formData.placement?.map((placement, index) => (
               <Paper key={index} className="p-4 mb-4" sx={{ mb: 4 }}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={6}>
@@ -486,12 +505,9 @@ export default function ProgressionForm({ formData, handleChange }) {
               )}
 
               <Grid item xs={12}>
-                <FileUploadField
-                  label="Upload Rank Card/Result (if any)"
-                  onChange={(files) =>
-                    handleExamChange(index, "resultCard", files[0])
-                  }
-                />
+               {!formData.competitiveExam[index].rankcards?( <IconButton onClick={()=>{Uploadcompet(index);}}>
+                                    <CloudUpload />
+                                  </IconButton>):(<IconButton><CloudDone/></IconButton>)}
               </Grid>
 
               <Grid item xs={12} className="flex justify-end">

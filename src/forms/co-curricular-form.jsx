@@ -18,8 +18,10 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+ 
 } from "@mui/material";
 import { Add, Delete, ExpandMore } from "@mui/icons-material";
+import { CloudUpload, Cancel,CloudDone } from "@mui/icons-material";
 
 export default function CoCurricularForm({ formData, handleChange }) {
   
@@ -99,6 +101,22 @@ export default function CoCurricularForm({ formData, handleChange }) {
     handleChange({ target: { name: section, value: updatedSection } });
   };
 
+  function Upload(index, type) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf,.jpg,.png';
+    input.onchange = (event) => {
+      const file = event.target.files[0];
+       uploadFileToCloudinary(file).then((url) => {;
+            
+              formData[type][index].certificate = url;
+              console.log(url);
+            })
+    };
+    input.click();
+  }
+  
+
   return (
     <Box
       sx={{
@@ -150,6 +168,7 @@ export default function CoCurricularForm({ formData, handleChange }) {
                 key,
               }))}
             isMobile={isMobile}
+          
             handleAddRow={handleAddRow}
             handleChangeRow={handleChangeRow}
             handleRemoveRow={handleRemoveRow}
@@ -158,7 +177,7 @@ export default function CoCurricularForm({ formData, handleChange }) {
       )}
     </Box>
   );
-}
+
 
 //? defined reusable function
 function Section({
@@ -192,16 +211,9 @@ function Section({
                     }
                   />
                 ))}
-                <Button variant="contained" component="label">
-                  Upload Certificate
-                  <input
-                    type="file"
-                    hidden
-                    onChange={(e) =>
-                      handleChangeRow(index, "certificate", e.target.files[0], section)
-                    }
-                  />
-                </Button>
+                  {!formData[section][index].clubs?( <IconButton onClick={()=>{Upload(index, section);}}>
+                                      <CloudUpload />
+                                    </IconButton>):(<IconButton><CloudDone/></IconButton>)}
                 <IconButton onClick={() => handleRemoveRow(index, section)}>
                   <Delete />
                 </IconButton>
@@ -235,16 +247,9 @@ function Section({
                     </TableCell>
                   ))}
                   <TableCell>
-                    <Button variant="contained" component="label">
-                      Upload
-                      <input
-                        type="file"
-                        hidden
-                        onChange={(e) =>
-                          handleChangeRow(index, "certificate", e.target.files[0], section)
-                        }
-                      />
-                    </Button>
+                  {!formData[section][index].clubs?( <IconButton onClick={()=>{Upload(index, section);}}>
+                                      <CloudUpload />
+                                    </IconButton>):(<IconButton><CloudDone/></IconButton>)}
                   </TableCell>
                   <TableCell>
                     <IconButton onClick={() => handleRemoveRow(index, section)}>
@@ -266,4 +271,6 @@ function Section({
       </Button>
     </Box>
   );
+}
+
 }

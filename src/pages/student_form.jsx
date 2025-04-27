@@ -17,6 +17,7 @@ import CoCurricularForm from "../forms/co-curricular-form"; // form component fo
 import MiscellaneousForms from "../forms/miscellaneous-forms"; // form component for handling the miscellenous details of the student
 //? importing components
 import Sidebar from "../components/Sidebar"; // sidebar component
+import { SignalCellularConnectedNoInternet1BarSharp } from "@mui/icons-material";
 
 export default function MultiStepForm({ fetchUserProfile }) {
   const user = localStorage.getItem("user")
@@ -90,6 +91,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         semester: 1,
         sgpa: "",
         cgpa: "",
+        gradecard:null
       },
     ],
     selectedProfessional: user?.acedamicInfo?.selectedProfessional || [],
@@ -107,7 +109,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         institute: "",
         sdgConnection: false,
         outcome: "",
-        certificate: null,
+        projects: null,
       },
     ],
     publications: {
@@ -183,7 +185,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
       },
     ],
   });
-
+  //console.log(user.careerProgression)
   //* state to control placement details at the university
   const [placementformData, setPlacementFormData] = useState({
     placement: user?.careerProgression?.placement || [
@@ -195,7 +197,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         year: "",
         package: "",
         accepted: false,
-        offerLetter: null,
+        placement: null,
       },
     ],
     competitiveExam: user?.careerProgression?.exams || [
@@ -207,7 +209,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         percentile: "",
         trainingType: "",
         trainingMode: "",
-        rankCard: null,
+        rankcards: null,
       },
     ],
     higherStudy: user?.careerProgression?.higherStudy || {
@@ -231,7 +233,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         role: "",
         accolades: [""],
         achievements: [""],
-        certificate: null,
+        clubs: null,
       },
     ],
     techFests: user?.curricularInfo?.techfests || [
@@ -243,14 +245,14 @@ export default function MultiStepForm({ fetchUserProfile }) {
         role: "",
         teammates: [""],
         outcome: "",
-        certificate: null,
+        techfests: null,
       },
     ],
     leadership: user?.curricularInfo?.leadership || [
       {
         role: "",
         details: "",
-        certificate: null,
+        leadership: null,
       },
     ],
     sports: user?.curricularInfo?.sports || [
@@ -261,7 +263,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         year: "",
         result: "",
         accolades: "",
-        certificate: null,
+        sports: null,
       },
     ],
     skills: user?.curricularInfo?.skills || [
@@ -271,7 +273,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         mode: "",
         duration: "",
         fee: "",
-        certificate: null,
+        skills: null,
       },
     ],
     socialActivities: user?.curricularInfo?.socialActivities || [
@@ -280,7 +282,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
         details: "",
         date: "",
         location: "",
-        certificate: null,
+        socialactivities: null,
       },
     ],
     seminars: user?.curricularInfo?.seminars || {
@@ -288,7 +290,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
       venue: "",
       date: "",
       organizer: "",
-      certificate: null,
+      seminars: null,
     },
   });
 
@@ -395,7 +397,7 @@ export default function MultiStepForm({ fetchUserProfile }) {
     //for submitting form data to the server
     try {
       const response = await fetch(
-        "https://ju-mech-erp-server-side-org.onrender.com/users/details-submit",
+        "http://localhost:5000/users/details-submit",
         {
           method: "POST",
           headers: {

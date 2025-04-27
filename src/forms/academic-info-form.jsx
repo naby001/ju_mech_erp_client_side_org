@@ -23,7 +23,8 @@ import {
   Chip,
   useMediaQuery,
 } from "@mui/material";
-import { Add, Delete, CloudUpload, Cancel } from "@mui/icons-material";
+import { Add, Delete, CloudUpload, Cancel,CloudDone } from "@mui/icons-material";
+import { uploadFileToCloudinary } from "../helpers/uploadfiles";
 
 //* List of Electives (Professional & Open)
 const electivesList = ["Elective 1", "Elective 2", "Elective 3", "Elective 4"];
@@ -145,6 +146,35 @@ export default function AcademicInfoForm({ formData, handleChange }) {
     });
   };
 
+  function Upload(index) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf,.jpg,.png'; // allow only specific types (optional)
+    input.onchange = (event) => {
+      const file = event.target.files[0];
+      uploadFileToCloudinary(file).then((url) => {;
+      
+        formData.grades[index].gradecard = url;
+        console.log(url);
+      })
+    };
+    input.click();
+  }
+  
+  function Uploadproj(index) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf,.jpg,.png'; // allow only specific types (optional)
+    input.onchange = (event) => {
+      const file = event.target.files[0];
+      uploadFileToCloudinary(file).then((url) => {;
+      
+        formData.projectDetails[index].certificate = url;
+        console.log(url);
+      })
+    };
+    input.click();
+  }
   return (
     <Box>
       <Typography variant="h4" sx={{ mb: 4 }} gutterBottom>
@@ -187,9 +217,9 @@ export default function AcademicInfoForm({ formData, handleChange }) {
                   </TableCell>
                   {/* Table icons */}
                   <TableCell sx={{ display: "flex", flexDirection: "row" }}>
-                    <IconButton>
+                   {!formData.grades[index].gradecard?( <IconButton onClick={()=>{Upload(index);}}>
                       <CloudUpload />
-                    </IconButton>
+                    </IconButton>):(<IconButton><CloudDone/></IconButton>)}
                     <IconButton onClick={addSemester}>
                       <Add />
                     </IconButton>
@@ -426,6 +456,7 @@ export default function AcademicInfoForm({ formData, handleChange }) {
               <Button
                 variant="contained"
                 component="label"
+                onClick={()=>{Uploadproj(index);}} 
                 startIcon={<CloudUpload />}
                 sx={{ backgroundColor: "#388e3c" }}
               >
@@ -585,6 +616,7 @@ export default function AcademicInfoForm({ formData, handleChange }) {
                           color: "white",
                           "&:hover": { bgcolor: "#388e3c" },
                         }}
+                        
                       >
                         <CloudUpload sx={{ mr: 1 }} /> Upload
                         <input type="file" hidden />

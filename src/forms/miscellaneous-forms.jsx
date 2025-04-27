@@ -1,15 +1,26 @@
 import React from "react";
-import { Box, Button, Container, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Container, TextField, Typography, useMediaQuery, IconButton } from "@mui/material";
 import { motion } from "framer-motion";
+import { Add, Delete, CloudUpload, Cancel,CloudDone } from "@mui/icons-material";
 
 export default function MiscellaneousForm({ formData, handleChange }) {
   const isMobile = useMediaQuery("(max-width:900px)");
 
   // Function to handle file uploads using handleChange
-  const handleFileUpload = (field, file) => {
-    handleChange({ target: { name: field, value: file } });
-  };
-
+  function Upload() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.pdf,.jpg,.png'; // allow only specific types (optional)
+    input.onchange = (event) => {
+      const file = event.target.files[0];
+      uploadFileToCloudinary(file).then((url) => {;
+           
+             formData.lor= url;
+             console.log(url);
+           })
+    };
+    input.click();
+  }
   // Function to export data as an array
   const exportDataAsArray = () => {
     const dataArray = [
@@ -59,13 +70,11 @@ export default function MiscellaneousForm({ formData, handleChange }) {
             background: "#b70924",
             width: isMobile ? "100%" : "40%",
           }}
+          onClick={()=>{Upload();}}
         >
-          Upload LOR
-          <input
-            type="file"
-            hidden
-            onChange={(e) => handleFileUpload("lor", e.target.files[0])}
-          />
+           {!formData.lor?( <IconButton >
+                      <CloudUpload />
+                    </IconButton>):(<IconButton><CloudDone/></IconButton>)}
         </Button>
       </Box>
 
