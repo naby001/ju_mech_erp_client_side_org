@@ -25,6 +25,8 @@ import {
 } from "@mui/material";
 import { Add, Delete, CloudUpload, Cancel,CloudDone } from "@mui/icons-material";
 import { uploadFileToCloudinary } from "../helpers/uploadfiles";
+import CircularProgress from "../components/Loading";
+import Loader from "../components/Loading";
 
 //* List of Electives (Professional & Open)
 const electivesList = ["Elective 1", "Elective 2", "Elective 3", "Elective 4"];
@@ -37,8 +39,7 @@ const openElectivesList = [
 export default function AcademicInfoForm({ formData, handleChange }) {
   //* State variables
   const isMobile = useMediaQuery("(max-width: 768px)");
-  //& Addition functions for adding student details
-  //? Addition of semester
+  const [loading,setloading]=useState(false);
   const addSemester = () => {
     const newSem = [
       ...formData.grades,
@@ -152,10 +153,12 @@ export default function AcademicInfoForm({ formData, handleChange }) {
     input.accept = '.pdf,.jpg,.png'; // allow only specific types (optional)
     input.onchange = (event) => {
       const file = event.target.files[0];
+      setloading(true);
       uploadFileToCloudinary(file).then((url) => {;
       
         formData.grades[index].gradecard = url;
-        console.log(url);
+        setloading(false);
+       
       })
     };
     input.click();
@@ -167,10 +170,11 @@ export default function AcademicInfoForm({ formData, handleChange }) {
     input.accept = '.pdf,.jpg,.png'; // allow only specific types (optional)
     input.onchange = (event) => {
       const file = event.target.files[0];
+      setloading(true);
       uploadFileToCloudinary(file).then((url) => {;
       
         formData.projectDetails[index].certificate = url;
-        console.log(url);
+       setloading(false);
       })
     };
     input.click();
@@ -453,7 +457,7 @@ export default function AcademicInfoForm({ formData, handleChange }) {
                   <MenuItem value="No">No</MenuItem>
                 </Select>
               </FormControl>
-              <Button
+             {!loading?( <Button
                 variant="contained"
                 component="label"
                 onClick={()=>{Uploadproj(index);}} 
@@ -462,7 +466,7 @@ export default function AcademicInfoForm({ formData, handleChange }) {
               >
                 Upload Certificate
                 <input type="file" hidden />
-              </Button>
+              </Button>):(<Loader/>)}
             </Paper>
           ))
         ) : (
@@ -608,7 +612,7 @@ export default function AcademicInfoForm({ formData, handleChange }) {
                       </Select>
                     </TableCell>
                     <TableCell>
-                      <Button
+                     {!loading?( <Button
                         variant="contained"
                         component="label"
                         sx={{
@@ -620,7 +624,7 @@ export default function AcademicInfoForm({ formData, handleChange }) {
                       >
                         <CloudUpload sx={{ mr: 1 }} /> Upload
                         <input type="file" hidden />
-                      </Button>
+                      </Button>):(<Loader/>)}
                     </TableCell>
                   </TableRow>
                 ))}

@@ -107,10 +107,11 @@ export default function CoCurricularForm({ formData, handleChange }) {
     input.accept = '.pdf,.jpg,.png';
     input.onchange = (event) => {
       const file = event.target.files[0];
+      setloading(true);
        uploadFileToCloudinary(file).then((url) => {;
             
               formData[type][index].certificate = url;
-              console.log(url);
+              setloading(false)
             })
     };
     input.click();
