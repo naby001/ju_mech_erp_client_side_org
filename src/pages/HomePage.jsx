@@ -13,6 +13,7 @@ import EventBanner from "../components/homePage/EventBanner";
 import Contact from "../components/homePage/Contact";
 //importing typography styles
 import "@fontsource/pacifico";
+import backgroundImage from "../assets/image.png"; // Ensure correct import for the background image
 
 // Object for facilities provided by JUMERP
 const facilities = [
@@ -46,20 +47,17 @@ const faculty = [
   {
     name: "Dr. John Doe",
     title: "Professor of Mechanical Engineering",
-    image:
-      "https://images.pexels.com/photos/3748221/pexels-photo-3748221.jpeg?auto=compress&cs=tinysrgb&h=350",
+    image: "/assets/faculty-john-doe.jpg", // Updated to local asset
   },
   {
     name: "Dr. Jane Smith",
     title: "Associate Professor of Robotics",
-    image:
-      "https://images.pexels.com/photos/3182749/pexels-photo-3182749.jpeg?auto=compress&cs=tinysrgb&h=350",
+    image: "/assets/faculty-jane-smith.jpg", // Updated to local asset
   },
   {
     name: "Dr. Emily Johnson",
     title: "Assistant Professor of Thermodynamics",
-    image:
-      "https://images.pexels.com/photos/3775536/pexels-photo-3775536.jpeg?auto=compress&cs=tinysrgb&h=350",
+    image: "/assets/faculty-emily-johnson.jpg", // Updated to local asset
   },
   // Add more faculty members as needed
 ];
@@ -73,7 +71,29 @@ export default function HomePage() {
     : null;
 
   return (
-    <Box sx={{ height: "100vh", overflowY: "scroll", overflowX: "hidden" }}>
+    <Box
+      sx={{
+        height: "100vh",
+        overflowY: "scroll",
+        overflowX: "hidden",
+        position: "relative",
+      }}
+    >
+      {/* Background image with blur */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "blur(8px)", // Apply blur effect
+          zIndex: -1, // Place it behind other content
+        }}
+      />
       <Navbar />
       <Box sx={{ textAlign: "center", mt: 10, padding: "40px 20px" }}>
         <Typography
@@ -129,7 +149,7 @@ export default function HomePage() {
           textAlign: "center",
           padding: "40px 20px",
           borderRadius: "8px",
-          backgroundImage: "url(/path/to/your/background-image.jpg)", // Add your background image path here
+          backgroundImage: "url('/assets/background-about.jpg')", // Updated background image path
           backgroundSize: "cover",
           backgroundPosition: "center",
           color: "#fff", // Change text color to white for better contrast

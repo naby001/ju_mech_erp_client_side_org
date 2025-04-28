@@ -38,6 +38,10 @@ export default function Navbar() {
     return;
   };
 
+  const handleInProgress = () => {
+    alert("This feature is currently under development. Please check back later.");
+  };
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -124,8 +128,7 @@ export default function Navbar() {
           </Button>
           <Button
             color="inherit"
-            component={Link}
-            to="/about"
+            onClick={handleInProgress}
             sx={{
               fontSize: { xs: "0.9rem", md: "1.1rem" }, // Slightly larger font size
               fontWeight: "bold", // Bold text for better readability
@@ -140,8 +143,7 @@ export default function Navbar() {
           </Button>
           <Button
             color="inherit"
-            component={Link}
-            to="/facilities"
+            onClick={handleInProgress}
             sx={{
               fontSize: { xs: "0.9rem", md: "1.1rem" }, // Slightly larger font size
               fontWeight: "bold", // Bold text for better readability
@@ -156,8 +158,7 @@ export default function Navbar() {
           </Button>
           <Button
             color="inherit"
-            component={Link}
-            to="/faculty"
+            onClick={handleInProgress}
             sx={{
               fontSize: { xs: "0.9rem", md: "1.1rem" }, // Slightly larger font size
               fontWeight: "bold", // Bold text for better readability
@@ -172,8 +173,7 @@ export default function Navbar() {
           </Button>
           <Button
             color="inherit"
-            component={Link}
-            to="/contact"
+            onClick={handleInProgress}
             sx={{
               fontSize: { xs: "0.9rem", md: "1.1rem" }, // Slightly larger font size
               fontWeight: "bold", // Bold text for better readability
@@ -209,16 +209,16 @@ export default function Navbar() {
               <ListItem button component={Link} to="/">
                 <ListItemText primary="Home" />
               </ListItem>
-              <ListItem button component={Link} to="/about">
+              <ListItem button onClick={handleInProgress}>
                 <ListItemText primary="Notices" />
               </ListItem>
-              <ListItem button component={Link} to="/facilities">
+              <ListItem button onClick={handleInProgress}>
                 <ListItemText primary="Faculty" />
               </ListItem>
-              <ListItem button component={Link} to="/faculty">
+              <ListItem button onClick={handleInProgress}>
                 <ListItemText primary="Events" />
               </ListItem>
-              <ListItem button component={Link} to="/contact">
+              <ListItem button onClick={handleInProgress}>
                 <ListItemText primary="Routines" />
               </ListItem>
             </List>
