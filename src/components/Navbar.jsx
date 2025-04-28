@@ -39,7 +39,9 @@ export default function Navbar() {
   };
 
   const handleInProgress = () => {
-    alert("This feature is currently under development. Please check back later.");
+    alert(
+      "This feature is currently under development. Please check back later."
+    );
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
